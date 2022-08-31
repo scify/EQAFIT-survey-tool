@@ -1,0 +1,30 @@
+@import "functions";
+
+.survey-selector-container {
+  border: 1px solid color(color02);
+  padding: 2.5rem 0;
+
+  .intro {
+    padding-top: 8px;
+  }
+
+  .btn-start {
+    --bs-btn-padding-y: calc(0.375rem + 4px);
+  }
+
+  .multiselect__option--highlight {
+    background: color(color06);
+  }
+
+  .multiselect__tags {
+    padding: 8px 40px 4px 8px;
+  }
+
+  .multiselect__placeholder {
+    margin-bottom: 8px;
+  }
+
+  .multiselect__single {
+    padding-top: 4px;
+  }
+}

@@ -20,7 +20,7 @@
           </p>
         </div>
       </div>
-      <div class="row">
+      <div class="row mb-3">
         <div class="col">
           <div class="container-fluid">
             <div class="row survey-selector-container">
@@ -60,6 +60,30 @@
           </div>
         </div>
       </div>
+      <div class="row">
+        <div class="col">
+          <div class="form-check small">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              v-model="consentChecked"
+              id="flexCheckDefault"
+            />
+            <label class="form-check-label" for="flexCheckDefault">
+              I consent with the
+              <a class="text-decoration-none" href="#" target="_blank"
+                >Privacy Policy.</a
+              >
+            </label>
+            <span
+              v-if="shouldShowMessageToAcceptPrivacyPolicy()"
+              class="text-danger ms-1"
+            >
+              It is required to accept the privacy policy.
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -78,6 +102,8 @@ export default {
       surveyProvider: null,
       surveys: [],
       selected: null,
+      consentChecked: false,
+      buttonClicked: false,
       options: [
         {
           name: "Student",
@@ -104,11 +130,17 @@ export default {
   methods: {
     selectSurvey() {
       let instance = this;
-      this.loading = true;
-      setTimeout(function () {
-        instance.$emit("surveySelected", instance.selected.value);
-        this.loading = false;
-      }, 1000);
+      this.buttonClicked = true;
+      if (!this.shouldShowMessageToAcceptPrivacyPolicy()) {
+        this.loading = true;
+        setTimeout(function () {
+          instance.$emit("surveySelected", instance.selected.value);
+          this.loading = false;
+        }, 1000);
+      }
+    },
+    shouldShowMessageToAcceptPrivacyPolicy() {
+      return !this.consentChecked && this.buttonClicked;
     },
   },
 };

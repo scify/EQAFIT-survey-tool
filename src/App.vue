@@ -25,6 +25,7 @@ export default {
   mounted() {},
   data: function () {
     return {
+      surveyId: null,
       appState: State.select_survey,
     };
   },
