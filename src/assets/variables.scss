@@ -1,0 +1,32 @@
+//set default font-size
+$html-font-size: 16px;
+
+$colors: (
+  color01: #333333,
+  color02: #0088ff,
+  color03: #e1f5ff,
+  color05: #f9f9f9,
+  color06: #8bc5f8,
+  color07: #1c9e75,
+  color08: #cae5e0,
+);
+
+/*
+Here we override our variables
+*/
+$container-max-widths: (
+        sm: 540px,
+        md: 720px,
+        lg: 960px,
+        xl: 1140px,
+        xxl: 1280px /* update by SciFY*/,
+);
+
+$grid-breakpoints: (
+        xs: 0,
+        sm: 576px,
+        md: 768px,
+        lg: 992px,
+        xl: 1200px,
+        xxl: 1500px /* this will be never triggered, since our max-container size is 1280*/,
+);

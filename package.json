@@ -1,0 +1,27 @@
+{
+  "name": "eqafit-survey-tool",
+  "version": "0.0.1-beta",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --port 4173",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
+  },
+  "dependencies": {
+    "bootstrap": "^5.2.0",
+    "chart.js": "^3.9.1",
+    "survey-vue-ui": "^1.9.46",
+    "vue": "^3.2.37",
+    "vue-multiselect": "^3.0.0-alpha.2"
+  },
+  "devDependencies": {
+    "@rushstack/eslint-patch": "^1.1.4",
+    "@vitejs/plugin-vue": "^3.0.1",
+    "@vue/eslint-config-prettier": "^7.0.0",
+    "eslint": "8.22.0",
+    "eslint-plugin-vue": "^9.3.0",
+    "prettier": "^2.7.1",
+    "sass": "^1.54.6",
+    "vite": "^3.0.4"
+  }
+}

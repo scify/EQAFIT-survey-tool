@@ -1,0 +1,16 @@
+@use "sass:math";
+@import "variables";
+
+//https://medium.com/@bhargav3shah/scss-convert-pixel-values-to-rem-using-functions-f1cef575edfd
+@function stripUnit($value) {
+  @return math.div($value, ($value * 0 + 1));
+}
+
+// Converts px to rems
+@function rem($pxValue) {
+  @return #{math.div(stripUnit($pxValue), stripUnit($html-font-size))}rem;
+}
+
+@function color($color-name) {
+  @return map-get($colors, $color-name);
+}

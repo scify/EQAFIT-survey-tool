@@ -1,0 +1,209 @@
+@use "sass:math";
+// Functions first
+@import "../../node_modules/bootstrap/scss/functions";
+
+// Variable overrides second
+$enable-shadows: true;
+
+// Required Bootstrap imports
+@import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/maps";
+@import "../../node_modules/bootstrap/scss/mixins";
+@import "../../node_modules/bootstrap/scss/root";
+
+// Optional components
+@import "../../node_modules/bootstrap/scss/utilities";
+@import "../../node_modules/bootstrap/scss/reboot";
+@import "../../node_modules/bootstrap/scss/containers";
+@import "../../node_modules/bootstrap/scss/grid";
+@import "../../node_modules/bootstrap/scss/helpers";
+@import "../../node_modules/bootstrap/scss/utilities/api";
+
+@import "variables";
+// Our functions
+@import "functions";
+
+/* color palette from <https://github.com/vuejs/theme> */
+:root {
+  --vt-c-white: #ffffff;
+  --vt-c-white-soft: #f8f8f8;
+  --vt-c-white-mute: #f2f2f2;
+
+  --vt-c-black: #181818;
+  --vt-c-black-soft: #222222;
+  --vt-c-black-mute: #282828;
+
+  --vt-c-indigo: #2c3e50;
+
+  --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
+  --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
+  --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
+  --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);
+
+  --vt-c-text-light-1: var(--vt-c-indigo);
+  --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
+  --vt-c-text-dark-1: var(--vt-c-white);
+  --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+}
+
+/* semantic color variables for this project */
+:root {
+  --color-background: var(--vt-c-white);
+  --color-background-soft: var(--vt-c-white-soft);
+  --color-background-mute: var(--vt-c-white-mute);
+
+  --color-border: var(--vt-c-divider-light-2);
+  --color-border-hover: var(--vt-c-divider-light-1);
+
+  --color-heading: var(--vt-c-text-light-1);
+  --color-text: var(--vt-c-text-light-1);
+
+  --section-gap: 160px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: var(--vt-c-black);
+    --color-background-soft: var(--vt-c-black-soft);
+    --color-background-mute: var(--vt-c-black-mute);
+
+    --color-border: var(--vt-c-divider-dark-2);
+    --color-border-hover: var(--vt-c-divider-dark-1);
+
+    --color-heading: var(--vt-c-text-dark-1);
+    --color-text: var(--vt-c-text-dark-2);
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  position: relative;
+  font-weight: normal;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--color-text);
+  background: var(--color-background);
+  transition: color 0.5s, background-color 0.5s;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+
+  font-weight: normal;
+}
+
+a,
+.green {
+  text-decoration: none;
+  color: hsla(160, 100%, 37%, 1);
+  transition: 0.4s;
+}
+
+@media (hover: hover) {
+  a:hover {
+    background-color: hsla(160, 100%, 37%, 0.2);
+  }
+}
+
+/*@media (min-width: 1024px) {*/
+/*  body {*/
+/*    display: flex;*/
+/*    place-items: center;*/
+/*  }*/
+
+/*  #app {*/
+/*    display: grid;*/
+/*    align-content: center;*/
+/*    padding: 0 2rem;*/
+/*    justify-content: center;*/
+/*  }*/
+/*}*/
+
+@media (min-width: 1024px) {
+  main .wrapper {
+    display: flex;
+    place-items: center;
+    flex-wrap: wrap;
+  }
+}
+
+html {
+  font-size: $html-font-size;
+
+  /*  @include media-breakpoint-down(md) {
+      font-size: 14px;
+  } */
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+  box-sizing: border-box;
+  font-weight: 400;
+  line-height: 1.7;
+  color: color(color01);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Roboto", sans-serif;
+}
+
+h1 {
+  font-size: rem(42px);
+  font-weight: bold;
+}
+
+h2 {
+  font-size: rem(32px);
+  font-weight: bold;
+
+  @include media-breakpoint-down(md) {
+    font-size: rem(22px);
+  }
+}
+
+p {
+  max-width: 955px;
+}
+
+a {
+  font-weight: bold;
+  color: color(color02);
+  text-decoration: underline;
+}
+
+a:hover {
+  color: color(color06);
+  text-decoration: underline;
+}
+
+.buttons {
+  padding: 15px 50px;
+  font-weight: bold;
+}
+
+.btn-danger {
+  color: #fff;
+  background-color: color(color02);
+  border-color: color(color01);
+}
+
+.btn-danger:hover {
+  color: #fff;
+  background-color: color(color06);
+  border-color: color(color01);
+}
