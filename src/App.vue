@@ -1,16 +1,31 @@
 <template>
   <main>
+    <div class="container-fluid mb-4" v-if="shouldShowBackButton()">
+      <div class="row">
+        <div class="col text-start">
+          <button class="btn btn-light btn-sm" @click="goBack">
+            <i class="bi bi-caret-left-fill mr-2"></i>Back
+          </button>
+        </div>
+      </div>
+    </div>
     <div class="wrapper">
       <SelectSurvey
         v-if="appInSelectSurveyState()"
         @survey-selected="surveySelected"
       ></SelectSurvey>
+      <SelectSurveySections
+        v-if="appInSelectSurveySectionsState()"
+        :survey-id="surveyId"
+        @survey-sections-selected="surveySectionsSelected"
+      ></SelectSurveySections>
     </div>
   </main>
 </template>
 
 <script>
 import SelectSurvey from "@/components/SelectSurvey/SelectSurvey.vue";
+import SelectSurveySections from "@/components/SelectSurveySections/SelectSurveySections.vue";
 
 const State = Object.freeze({
   select_survey: 0,
@@ -21,12 +36,15 @@ const State = Object.freeze({
 
 export default {
   name: "App",
-  components: { SelectSurvey },
-  mounted() {},
+  components: { SelectSurveySections, SelectSurvey },
+  mounted() {
+    this.surveyId = 1;
+    this.appState = State.select_survey_sections;
+  },
   data: function () {
     return {
       surveyId: null,
-      appState: State.select_survey,
+      appState: null,
     };
   },
   methods: {
@@ -42,8 +60,18 @@ export default {
     appInSurveyResponseResultsState() {
       return this.appState === State.survey_response_results;
     },
+    shouldShowBackButton() {
+      return this.appState;
+    },
+    goBack() {
+      this.appState -= 1;
+    },
     surveySelected(surveyId) {
-      console.log(surveyId);
+      this.surveyId = surveyId;
+      this.appState = State.select_survey_sections;
+    },
+    surveySectionsSelected(survey) {
+      console.log(survey);
     },
   },
 };

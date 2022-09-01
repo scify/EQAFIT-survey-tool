@@ -9,7 +9,9 @@
   },
   "dependencies": {
     "bootstrap": "^5.2.0",
+    "bootstrap-icons": "^1.9.1",
     "chart.js": "^3.9.1",
+    "lodash": "^4.17.21",
     "survey-vue-ui": "^1.9.46",
     "vue": "^3.2.37",
     "vue-multiselect": "^3.0.0-alpha.2"

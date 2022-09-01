@@ -25,7 +25,7 @@
           <div class="container-fluid">
             <div class="row survey-selector-container">
               <div class="col-2 text-center offset-1">
-                <p class="intro">I am a...</p>
+                <p class="intro text-start">I am a...</p>
               </div>
               <div class="col-4 text-center">
                 <VueMultiselect
@@ -135,7 +135,7 @@ export default {
         this.loading = true;
         setTimeout(function () {
           instance.$emit("surveySelected", instance.selected.value);
-          this.loading = false;
+          instance.loading = false;
         }, 1000);
       }
     },
