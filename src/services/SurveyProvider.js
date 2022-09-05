@@ -68,17 +68,19 @@ export default class SurveyProvider {
                 ],
               },
               {
-                type: "text",
                 name: "question3",
                 title: "Date of admission:",
-                defaultValue: "[YYYY-MM-DD]",
+                type: "datepicker",
+                inputType: "date",
+                dateFormat: "mm/dd/yy",
                 isRequired: true,
               },
               {
-                type: "text",
                 name: "question4",
                 title: "Date of graduation",
-                defaultValue: "[YYYY-MM-DD]",
+                type: "datepicker",
+                inputType: "date",
+                dateFormat: "mm/dd/yy",
                 isRequired: true,
               },
               {
@@ -1515,7 +1517,7 @@ export default class SurveyProvider {
         ],
         showProgressBar: "both",
         progressBarType: "buttons",
-        goNextPageAutomatic: true,
+        goNextPageAutomatic: false,
       },
     },
   ];

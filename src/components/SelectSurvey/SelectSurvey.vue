@@ -28,7 +28,7 @@
                 <p class="intro text-start">I am a...</p>
               </div>
               <div class="col-4 text-center">
-                <VueMultiselect
+                <VueMultiSelect
                   v-model="selected"
                   :options="options"
                   :multiple="false"
@@ -39,7 +39,7 @@
                   :searchable="false"
                   :allow-empty="false"
                 >
-                </VueMultiselect>
+                </VueMultiSelect>
               </div>
               <div class="col-4 text-center">
                 <button
@@ -90,11 +90,11 @@
 
 <script>
 import SurveyProvider from "@/services/SurveyProvider";
-import VueMultiselect from "vue-multiselect";
+import VueMultiSelect from "vue-multiselect";
 
 export default {
   name: "SelectSurvey",
-  components: { VueMultiselect },
+  components: { VueMultiSelect },
   emits: ["surveySelected"],
   data: function () {
     return {

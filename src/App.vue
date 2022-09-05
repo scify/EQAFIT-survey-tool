@@ -19,6 +19,10 @@
         :survey-id="surveyId"
         @survey-sections-selected="surveySectionsSelected"
       ></SelectSurveySections>
+      <SurveyComponent
+        v-if="appInSurveyResponseInProgressState()"
+        :survey="survey"
+      ></SurveyComponent>
     </div>
   </main>
 </template>
@@ -26,6 +30,8 @@
 <script>
 import SelectSurvey from "@/components/SelectSurvey/SelectSurvey.vue";
 import SelectSurveySections from "@/components/SelectSurveySections/SelectSurveySections.vue";
+import SurveyComponent from "@/components/Survey/Survey.vue";
+import SurveyProvider from "@/services/SurveyProvider";
 
 const State = Object.freeze({
   select_survey: 0,
@@ -36,16 +42,29 @@ const State = Object.freeze({
 
 export default {
   name: "App",
-  components: { SelectSurveySections, SelectSurvey },
+  components: { SurveyComponent, SelectSurveySections, SelectSurvey },
   mounted() {
     this.surveyId = 1;
-    this.appState = State.select_survey_sections;
+    this.appState = State.survey_response_in_progress;
+    const survey = this.surveyProvider.getSurvey(1);
+    const ids = [1, 2];
+    let pagesToKeep = [];
+    for (let i = 0; i < ids.length; i++) {
+      pagesToKeep.push(survey.survey.pages[i]);
+    }
+    survey.survey.pages = pagesToKeep;
+    this.survey = survey;
   },
   data: function () {
     return {
       surveyId: null,
       appState: null,
+      survey: null,
+      surveyProvider: null,
     };
+  },
+  created() {
+    this.surveyProvider = new SurveyProvider();
   },
   methods: {
     appInSelectSurveyState() {
@@ -71,7 +90,8 @@ export default {
       this.appState = State.select_survey_sections;
     },
     surveySectionsSelected(survey) {
-      console.log(survey);
+      this.survey = survey;
+      this.appState = State.survey_response_in_progress;
     },
   },
 };

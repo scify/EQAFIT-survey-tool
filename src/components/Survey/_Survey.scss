@@ -1,0 +1,116 @@
+@import "@/assets/functions";
+
+.Survey {
+  .survey-container {
+    .sv-btn.sv-footer__complete-btn,
+    .sv-btn.sv-footer__next-btn,
+    .sv-btn.sv-footer__prev-btn,
+    .sv-btn.sv-footer__start-btn {
+      background-color: color(color02);
+      border-radius: 3px;
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 1.7em;
+      border: 2px solid white;
+    }
+
+    .sv-btn.sv-footer__prev-btn {
+      float: left;
+    }
+
+    .sv-btn.sv-footer__complete-btn,
+    .sv-btn.sv-footer__next-btn,
+    .sv-btn.sv-footer__start-btn {
+      float: right;
+    }
+
+    .sv-page.sv-body__page,
+    .sv-footer {
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .sv-root-modern .sv-question__title--answer {
+      background-color: rgba(0, 119, 255, 0.2);
+    }
+
+    .sv-root-modern .sv-rating__item--selected .sv-rating__item-text {
+      background-color: color(color02);
+      color: rgb(255, 255, 255);
+      border-color: color(color02);
+    }
+
+    .sv-root-modern .sv-checkbox--checked .sv-checkbox__svg {
+      background-color: color(color02);
+    }
+
+    .sv-root-modern ::-webkit-scrollbar-thumb {
+      background: color(color02);
+    }
+
+    .sv-root-modern
+      .sv_progress-buttons__list
+      li.sv_progress-buttons__list-element--current::before {
+      border-color: color(color02);
+      background-color: white;
+    }
+
+    .sv-root-modern .sv_progress-buttons__list li::before {
+      border-color: color(color06);
+      background-color: color(color06);
+    }
+
+    .sv-root-modern .sv-container-modern__title {
+      color: color(color02);
+      margin: 0;
+      padding: 0;
+
+      h3 {
+        margin-bottom: 2rem;
+      }
+    }
+
+    .sv-root-modern .sv-item__control:focus + .sv-item__decorator {
+      border-color: color(color02);
+    }
+
+    .sv-root-modern .sv-text:focus {
+      border-color: color(color02);
+    }
+
+    .sv-list__item--selected,
+    .sv-list__item--selected:hover,
+    .sv-list__item--selected:focus {
+      background-color: color(color06);
+    }
+
+    .sv-root-modern .sv_progress-buttons__list li.sv_progress-buttons__list-element--passed + li::after {
+      background-color: color(color08);
+    }
+
+    .sv-body.sv-completedpage {
+
+      margin: 0;
+
+      h3 {
+        margin-top: 2rem;
+      }
+    }
+
+  }
+
+  #survey-loader {
+    --bs-spinner-width: 8rem;
+    --bs-spinner-height: 8rem;
+    --bs-spinner-border-width: 0.5em;
+    border: var(--bs-spinner-border-width) solid color(color02);
+    border-right-color: transparent;
+  }
+
+  .error {
+    margin-right: 0;
+    width: 100% !important;
+    max-width: none;
+    font-size: larger;
+  }
+}
