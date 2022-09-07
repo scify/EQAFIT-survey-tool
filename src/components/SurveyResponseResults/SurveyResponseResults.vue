@@ -40,13 +40,37 @@
     >
       <div class="row align-items-center">
         <div class="col-6">
-          <h4 class="results-label mb-2">{{ section }}</h4>
-          <p class="section-explanation">
-            <span v-if="survey">
-              {{ survey.section_descriptions[section] }}
-            </span>
-          </p>
-          <a class="mt-3" href="#">Read how to improve</a>
+          <div class="accordion" :id="'accordion_' + index">
+            <div class="accordion-item">
+              <h2 class="accordion-header" :id="'heading_' + index">
+                <button
+                  class="accordion-button"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  :data-bs-target="'#collapse_' + index"
+                  aria-expanded="true"
+                  :aria-controls="'collapse_' + index"
+                >
+                  {{ section }}
+                </button>
+              </h2>
+              <div
+                :id="'collapse_' + index"
+                class="accordion-collapse collapse"
+                :class="{ show: !index }"
+                :aria-labelledby="'heading_' + index"
+                :data-bs-parent="'accordion_' + index"
+              >
+                <div class="accordion-body">
+                  {{ survey.section_descriptions[section] }}<br /><br /><a
+                    class="mt-3"
+                    href="#"
+                    >Read how to improve</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="col-5 offset-1">
           <canvas :id="section.replace(' ', '_') + '_Chart'"></canvas>
