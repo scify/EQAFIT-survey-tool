@@ -41,7 +41,11 @@ export default {
   props: {
     survey: {
       type: Object,
-      required: false,
+      required: true,
+    },
+    consentMode: {
+      type: Boolean,
+      required: true,
     },
   },
   data: function () {
@@ -126,7 +130,12 @@ export default {
           this.survey.section_max_scores[key]
         );
       }
-      this.postDataToServer(sender.data);
+      if (this.consentMode) {
+        this.postDataToServer(sender.data);
+      } else {
+        this.loading = false;
+        this.$emit("surveyCompleted", this.sectionScores);
+      }
     },
     getQuestionSectionByQuestionName(questionName) {
       const page = this.surveyModel.getPageByQuestion(

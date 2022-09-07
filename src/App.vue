@@ -22,11 +22,13 @@
       <SurveyComponent
         v-if="appInSurveyResponseInProgressState()"
         :survey="survey"
+        :consent-mode="consentMode"
         @survey-completed="surveyCompleted"
       ></SurveyComponent>
       <SurveyResponseResults
         v-if="appInSurveyResponseResultsState()"
         :user-scores="userScores"
+        :consent-mode="consentMode"
         :survey-id="surveyId"
       ></SurveyResponseResults>
     </div>
@@ -74,7 +76,7 @@ export default {
       survey: null,
       surveyProvider: null,
       userScores: null,
-      anonymousMode: false,
+      consentMode: true,
     };
   },
   created() {
@@ -103,8 +105,9 @@ export default {
       this.surveyId = surveyId;
       this.appState = State.select_survey_sections;
     },
-    surveySectionsSelected(survey) {
-      this.survey = survey;
+    surveySectionsSelected(data) {
+      this.survey = data.survey;
+      this.consentMode = data.consentMode;
       this.appState = State.survey_response_in_progress;
     },
     surveyCompleted(userScores) {

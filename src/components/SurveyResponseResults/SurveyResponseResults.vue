@@ -73,6 +73,10 @@ export default {
       type: Number,
       required: true,
     },
+    consentMode: {
+      type: Boolean,
+      required: true,
+    },
   },
   data: function () {
     return {
@@ -94,12 +98,18 @@ export default {
     this.loading = true;
     this.survey = this.surveyProvider.getSurvey(this.surveyId);
     if (Object.keys(this.userScores).length < 3) this.chartType = "bar";
-    this.getResponsesFromServerAndInitializeData();
+    this.userResponsesLabels = Object.keys(this.userScores);
+    this.userResponsesValues = Object.values(this.userScores);
+    if (this.consentMode) {
+      this.getResponsesFromServerAndInitializeData();
+    } else {
+      this.createCharts();
+    }
   },
   methods: {
     createChart(elId) {
       const ctx = document.getElementById(elId);
-      new Chart(ctx, {
+      const chartConfig = {
         type: this.chartType,
         data: {
           labels: this.userResponsesLabels,
@@ -114,17 +124,6 @@ export default {
               pointBorderColor: "#fff",
               pointHoverBackgroundColor: "#fff",
               pointHoverBorderColor: "rgb(255, 99, 132)",
-            },
-            {
-              label: "Average respondent results",
-              data: this.averageResponsesValues,
-              fill: true,
-              backgroundColor: "rgba(54, 162, 235, 0.2)",
-              borderColor: "rgb(54, 162, 235)",
-              pointBackgroundColor: "rgb(54, 162, 235)",
-              pointBorderColor: "#fff",
-              pointHoverBackgroundColor: "#fff",
-              pointHoverBorderColor: "rgb(54, 162, 235)",
             },
           ],
         },
@@ -143,7 +142,21 @@ export default {
             },
           },
         },
-      });
+      };
+      if (this.consentMode) {
+        chartConfig.data.datasets.push({
+          label: "Average respondent results",
+          data: this.averageResponsesValues,
+          fill: true,
+          backgroundColor: "rgba(54, 162, 235, 0.2)",
+          borderColor: "rgb(54, 162, 235)",
+          pointBackgroundColor: "rgb(54, 162, 235)",
+          pointBorderColor: "#fff",
+          pointHoverBackgroundColor: "#fff",
+          pointHoverBorderColor: "rgb(54, 162, 235)",
+        });
+      }
+      new Chart(ctx, chartConfig);
     },
     getResponsesFromServerAndInitializeData() {
       let instance = this;
@@ -151,26 +164,29 @@ export default {
         .getSurveyResponsesFromServer()
         .then((data) => {
           instance.createAverageScoresObject(data);
-          instance.userResponsesLabels = Object.keys(this.userScores);
-          instance.userResponsesValues = Object.values(this.userScores);
-          for (let i = 0; i < instance.userResponsesLabels.length; i++)
+          for (let i = 0; i < instance.userResponsesLabels.length; i++) {
             instance.averageResponsesValues.push(
               instance.averageScores[instance.userResponsesLabels[i]]
             );
-          instance.createChart("overallChart");
-          for (let i = 0; i < instance.userResponsesLabels.length; i++) {
-            setTimeout(function () {
-              instance.createChart(
-                instance.userResponsesLabels[i].replace(" ", "_") + "_Chart"
-              );
-            }, 500);
           }
-          instance.loading = false;
+          instance.createCharts();
         })
         .catch((error) => {
           instance.loading = false;
           instance.error = error;
         });
+    },
+    createCharts() {
+      let instance = this;
+      this.createChart("overallChart");
+      for (let i = 0; i < this.userResponsesLabels.length; i++) {
+        setTimeout(function () {
+          instance.createChart(
+            instance.userResponsesLabels[i].replace(" ", "_") + "_Chart"
+          );
+        }, 500);
+      }
+      this.loading = false;
     },
     createAverageScoresObject(averageScoresFromServer) {
       let averageScoresCounter = 0;

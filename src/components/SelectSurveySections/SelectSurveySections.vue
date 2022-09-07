@@ -42,7 +42,7 @@
                 <button
                   :disabled="!selected"
                   class="btn btn-primary btn-start w-75"
-                  @click="selectSurveySections"
+                  @click="showAnonymousModeModal"
                 >
                   Take the Quiz
                   <span
@@ -91,11 +91,77 @@
       </div>
     </div>
   </div>
+
+  <div
+    class="modal fade"
+    ref="anonymousModeModal"
+    tabindex="-1"
+    aria-hidden="true"
+    data-bs-keyboard="false"
+    data-bs-backdrop="static"
+  >
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            Data save confirmation
+          </h5>
+        </div>
+        <div class="modal-body pb-5">
+          <div class="container">
+            <div class="row my-4">
+              <div class="col-8 mx-auto text-center">
+                <h5>Do you consent with the data processing?</h5>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-8 mx-auto text-start">
+                <p>
+                  If you consent with the processing of your survey responses,
+                  <b
+                    >you will be able to compare your final scores with the
+                    average scores by other users.</b
+                  >
+                </p>
+              </div>
+            </div>
+            <div class="row mb-5">
+              <div class="col-5 mx-auto text-start">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    v-model="consentMode"
+                    id="flexCheckDefault"
+                  />
+                  <label class="form-check-label" for="flexCheckDefault">
+                    I consent with the data processing.
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="row action-buttons">
+              <div class="col-4 text-center mx-auto">
+                <button
+                  type="button"
+                  class="btn btn-primary w-100"
+                  @click="selectSurveySections"
+                >
+                  Continue
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 import VueMultiselect from "vue-multiselect";
 import SurveyProvider from "@/services/SurveyProvider";
+import { Modal } from "bootstrap";
 
 export default {
   name: "SelectSurveySections",
@@ -116,6 +182,8 @@ export default {
       survey: {},
       surveySections: [],
       selected: [],
+      anonymousModeModal: null,
+      consentMode: true,
     };
   },
   created() {
@@ -124,7 +192,7 @@ export default {
   mounted() {
     this.loading = false;
     this.survey = this.surveyProvider.getSurvey(this.surveyId);
-
+    this.anonymousModeModal = new Modal(this.$refs.anonymousModeModal);
     for (let i = 0; i < this.survey.survey.pages.length; i++) {
       const section = {
         index: i,
@@ -138,7 +206,11 @@ export default {
     }
   },
   methods: {
+    showAnonymousModeModal() {
+      this.anonymousModeModal.show();
+    },
     selectSurveySections() {
+      this.anonymousModeModal.hide();
       if (this.selected.length === 1) {
         this.showToast("You should select <b>2</b> or more sections.");
       } else {
@@ -148,7 +220,10 @@ export default {
           pagesToKeep.push(this.survey.survey.pages[i]);
         }
         this.survey.survey.pages = pagesToKeep;
-        this.$emit("surveySectionsSelected", this.survey);
+        this.$emit("surveySectionsSelected", {
+          survey: this.survey,
+          consentMode: this.consentMode,
+        });
       }
     },
     removeOption(option) {
