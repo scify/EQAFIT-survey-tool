@@ -57,7 +57,7 @@ export default {
   },
   mounted() {
     this.surveyId = 1;
-    this.appState = State.survey_response_in_progress;
+    this.appState = State.select_survey;
     const survey = this.surveyProvider.getSurvey(1);
     const ids = [1, 2];
     let pagesToKeep = [];
@@ -74,6 +74,7 @@ export default {
       survey: null,
       surveyProvider: null,
       userScores: null,
+      anonymousMode: false,
     };
   },
   created() {

@@ -1,5 +1,5 @@
 <template>
-  <div class="SelectSurvey">
+  <div class="SelectSurvey w-100">
     <div class="container">
       <div class="row mb-2">
         <div class="col">

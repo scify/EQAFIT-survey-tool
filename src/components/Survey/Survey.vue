@@ -1,5 +1,5 @@
 <template>
-  <div class="Survey">
+  <div class="Survey w-100">
     <div v-if="survey.survey">
       <div class="container">
         <div class="row mb-5">

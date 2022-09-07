@@ -1,5 +1,5 @@
 <template>
-  <div class="SelectSurveySections">
+  <div class="SelectSurveySections w-100">
     <div class="container" v-if="survey.survey">
       <div class="row mb-2">
         <div class="col">
@@ -83,7 +83,9 @@
         >
           <div class="col">
             <h4 class="mb-2 section-title">{{ page.name }}</h4>
-            <p>{{ survey.section_descriptions[index] }}</p>
+            <p>
+              {{ survey.section_descriptions[getSectionShortName(page.name)] }}
+            </p>
           </div>
         </div>
       </div>
@@ -162,6 +164,11 @@ export default {
       setTimeout(function () {
         instance.toastVisible = false;
       }, 5000);
+    },
+    getSectionShortName(sectionName) {
+      // we need to extract section name from the whole title
+      const positionOfSecondSpace = sectionName.split(" ", 2).join(" ").length;
+      return sectionName.substring(0, positionOfSecondSpace);
     },
   },
 };
