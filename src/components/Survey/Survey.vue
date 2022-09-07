@@ -120,13 +120,12 @@ export default {
           }
         }
       }
-      const normalizedScores = this.convertToPercentages(
-        Object.values(this.sectionScores),
-        100
-      );
-      const keys = Object.keys(this.sectionScores);
-      for (let i = 0; i < normalizedScores.length; i++)
-        this.sectionScores[keys[i]] = normalizedScores[i];
+      for (const [key, value] of Object.entries(this.sectionScores)) {
+        this.sectionScores[key] = this.percentage(
+          value,
+          this.survey.section_max_scores[key]
+        );
+      }
       this.postDataToServer(sender.data);
     },
     getQuestionSectionByQuestionName(questionName) {
@@ -151,6 +150,7 @@ export default {
         },
         status: "publish",
       };
+      console.log(this.sectionScores);
       let instance = this;
       this.error = null;
       this.surveyProvider
@@ -164,13 +164,8 @@ export default {
           instance.error = error;
         });
     },
-    convertToPercentages(numbers, max) {
-      // eslint-disable-next-line no-unused-vars
-      const ratio = Math.max.apply(Math, numbers) / max;
-      for (let i = 0; i < numbers.length; i++) {
-        numbers[i] = Math.round(numbers[i] / ratio);
-      }
-      return numbers;
+    percentage(partialValue, totalValue) {
+      return Math.round((100 * partialValue) / totalValue);
     },
   },
 };

@@ -10,7 +10,7 @@ const axiosConfig = {
 };
 
 export default class SurveyProvider {
-  instance;
+  instance = null;
 
   constructor() {
     this.getAndSaveAuthToken();
@@ -20,7 +20,6 @@ export default class SurveyProvider {
     if (!this.instance) {
       this.instance = new SurveyProvider();
     }
-
     return this.instance;
   }
 
@@ -38,6 +37,11 @@ export default class SurveyProvider {
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
         "Section D":
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+      },
+      section_max_scores: {
+        "Section B": 118,
+        "Section C": 12,
+        "Section D": 80,
       },
       survey: {
         title: "Survey of Graduates",

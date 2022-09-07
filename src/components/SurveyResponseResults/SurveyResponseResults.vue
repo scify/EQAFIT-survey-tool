@@ -16,7 +16,7 @@
         </div>
       </div>
     </div>
-    <div class="container mb-5">
+    <div class="container mb-6">
       <div class="row mb-4">
         <div class="col-12">
           <h1>Results</h1>
@@ -27,7 +27,7 @@
           <h4 class="results-label">Overall</h4>
         </div>
       </div>
-      <div class="row">
+      <div class="row mb-5">
         <div class="col-lg-6 col-md-9 mx-auto">
           <canvas id="overallChart"></canvas>
         </div>
