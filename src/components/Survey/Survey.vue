@@ -72,30 +72,30 @@ export default {
       question10: "item2",
       question8: "item2",
       question11: "item10",
-      question13: { Row2: "3", Row3: "3", Row4: "2", Row5: "2", Row6: "3" },
+      question13: { Row2: "4", Row3: "4", Row4: "4", Row5: "4", Row6: "4" },
       question15: {
-        Row1: "3",
-        Row2: "2",
-        Row3: "3",
-        Row4: "3",
-        Row5: "3",
-        Row6: "3",
+        Row1: "4",
+        Row2: "4",
+        Row3: "4",
+        Row4: "4",
+        Row5: "4",
+        Row6: "4",
       },
       question14: {
         Row1: "5",
-        Row2: "4",
-        Row4: "4",
-        Row3: "4",
+        Row2: "5",
+        Row4: "5",
+        Row3: "5",
         Row5: "5",
-        Row6: "4",
-        Row7: "4",
-        Row8: "4",
-        Row9: "4",
-        Row10: "4",
-        Row11: "4",
-        Row12: "4",
-        Row13: "4",
-        Row14: "4",
+        Row6: "5",
+        Row7: "5",
+        Row8: "5",
+        Row9: "5",
+        Row10: "5",
+        Row11: "5",
+        Row12: "5",
+        Row13: "5",
+        Row14: "5",
       },
       question16: "item2",
     };
@@ -120,6 +120,13 @@ export default {
           }
         }
       }
+      const normalizedScores = this.convertToPercentages(
+        Object.values(this.sectionScores),
+        100
+      );
+      const keys = Object.keys(this.sectionScores);
+      for (let i = 0; i < normalizedScores.length; i++)
+        this.sectionScores[keys[i]] = normalizedScores[i];
       this.postDataToServer(sender.data);
     },
     getQuestionSectionByQuestionName(questionName) {
@@ -146,7 +153,6 @@ export default {
       };
       let instance = this;
       this.error = null;
-      console.log(instance.sectionScores);
       this.surveyProvider
         .sendSurveyResponseToServer(data)
         .then(() => {
@@ -157,6 +163,14 @@ export default {
           instance.loading = false;
           instance.error = error;
         });
+    },
+    convertToPercentages(numbers, max) {
+      // eslint-disable-next-line no-unused-vars
+      const ratio = Math.max.apply(Math, numbers) / max;
+      for (let i = 0; i < numbers.length; i++) {
+        numbers[i] = Math.round(numbers[i] / ratio);
+      }
+      return numbers;
     },
   },
 };
