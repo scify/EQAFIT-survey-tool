@@ -1,5 +1,21 @@
 <template>
-  <div class="SurveyResponseResults">
+  <div class="SurveyResponseResults w-100">
+    <div class="container mb-5">
+      <div class="row mb-4" v-if="loading">
+        <div class="col mx-auto text-center">
+          <div class="spinner-border" role="status" id="survey-loader">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-5" v-if="error">
+        <div class="col mx-auto text-center">
+          <p class="text-danger error">
+            {{ error }}
+          </p>
+        </div>
+      </div>
+    </div>
     <div class="container mb-5">
       <div class="row mb-4">
         <div class="col-12">
@@ -17,83 +33,23 @@
         </div>
       </div>
     </div>
-    <div class="container section-results">
+    <div
+      class="container section-results"
+      v-for="(section, index) in userResponsesLabels"
+      :key="'section_results_' + index"
+    >
       <div class="row align-items-center">
         <div class="col-6">
-          <h4 class="results-label mb-2">Section A</h4>
+          <h4 class="results-label mb-2">{{ section }}</h4>
           <p class="section-explanation">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
+            <span v-if="survey">
+              {{ survey.section_descriptions[section] }}
+            </span>
           </p>
           <a class="mt-3" href="#">Read how to improve</a>
         </div>
         <div class="col-5 offset-1">
-          <canvas id="sectionAChart"></canvas>
-        </div>
-      </div>
-    </div>
-    <div class="container section-results">
-      <div class="row align-items-center">
-        <div class="col-6">
-          <h4 class="results-label mb-2">Section B</h4>
-          <p class="section-explanation">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </p>
-          <a class="mt-3" href="#">Read how to improve</a>
-        </div>
-        <div class="col-5 offset-1">
-          <canvas id="sectionBChart"></canvas>
-        </div>
-      </div>
-    </div>
-    <div class="container section-results">
-      <div class="row align-items-center">
-        <div class="col-6">
-          <h4 class="results-label mb-2">Section C</h4>
-          <p class="section-explanation">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </p>
-          <a class="mt-3" href="#">Read how to improve</a>
-        </div>
-        <div class="col-5 offset-1">
-          <canvas id="sectionCChart"></canvas>
-        </div>
-      </div>
-    </div>
-    <div class="container section-results">
-      <div class="row align-items-center">
-        <div class="col-6">
-          <h4 class="results-label mb-2">Section D</h4>
-          <p class="section-explanation">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </p>
-          <a class="mt-3" href="#">Read how to improve</a>
-        </div>
-        <div class="col-5 offset-1">
-          <canvas id="sectionDChart"></canvas>
+          <canvas :id="section.replace(' ', '_') + '_Chart'"></canvas>
         </div>
       </div>
     </div>
@@ -102,34 +58,55 @@
 
 <script>
 import { Chart, registerables } from "chart.js";
+import SurveyProvider from "@/services/SurveyProvider";
 
 Chart.register(...registerables);
 
 export default {
   name: "SurveyResponseResults",
-  data: function () {
-    return {};
+  props: {
+    userScores: {
+      type: Object,
+      required: true,
+    },
+    surveyId: {
+      type: Number,
+      required: true,
+    },
   },
-
+  data: function () {
+    return {
+      error: null,
+      averageScores: {},
+      loading: false,
+      surveyProvider: null,
+      chartType: "radar",
+      userResponsesLabels: [],
+      userResponsesValues: [],
+      averageResponsesValues: [],
+      survey: {},
+    };
+  },
+  created() {
+    this.surveyProvider = SurveyProvider.getInstance();
+  },
   mounted() {
-    this.createChart("overallChart");
-    this.createChart("sectionAChart");
-    this.createChart("sectionBChart");
-    this.createChart("sectionCChart");
-    this.createChart("sectionDChart");
+    this.loading = true;
+    this.survey = this.surveyProvider.getSurvey(this.surveyId);
+    if (Object.keys(this.userScores).length < 3) this.chartType = "bar";
+    this.getResponsesFromServerAndInitializeData();
   },
   methods: {
     createChart(elId) {
       const ctx = document.getElementById(elId);
-      // eslint-disable-next-line no-unused-vars
-      const myChart = new Chart(ctx, {
-        type: "radar",
+      new Chart(ctx, {
+        type: this.chartType,
         data: {
-          labels: ["Section A", "Section B", "Section C", "Section D"],
+          labels: this.userResponsesLabels,
           datasets: [
             {
               label: "Your results",
-              data: [65, 59, 74, 81],
+              data: this.userResponsesValues,
               fill: true,
               backgroundColor: "rgba(255, 99, 132, 0.2)",
               borderColor: "rgb(255, 99, 132)",
@@ -140,7 +117,7 @@ export default {
             },
             {
               label: "Average respondent results",
-              data: [54, 52, 67, 76],
+              data: this.averageResponsesValues,
               fill: true,
               backgroundColor: "rgba(54, 162, 235, 0.2)",
               borderColor: "rgb(54, 162, 235)",
@@ -167,6 +144,58 @@ export default {
           },
         },
       });
+    },
+    getResponsesFromServerAndInitializeData() {
+      let instance = this;
+      this.surveyProvider
+        .getSurveyResponsesFromServer()
+        .then((data) => {
+          instance.createAverageScoresObject(data);
+          instance.userResponsesLabels = Object.keys(this.userScores);
+          instance.userResponsesValues = Object.values(this.userScores);
+          for (let i = 0; i < instance.userResponsesLabels.length; i++)
+            instance.averageResponsesValues.push(
+              instance.averageScores[instance.userResponsesLabels[i]]
+            );
+          instance.createChart("overallChart");
+          for (let i = 0; i < instance.userResponsesLabels.length; i++) {
+            setTimeout(function () {
+              instance.createChart(
+                instance.userResponsesLabels[i].replace(" ", "_") + "_Chart"
+              );
+            }, 500);
+          }
+          instance.loading = false;
+        })
+        .catch((error) => {
+          instance.loading = false;
+          instance.error = error;
+        });
+    },
+    createAverageScoresObject(averageScoresFromServer) {
+      let averageScoresCounter = 0;
+      for (let i = 0; i < averageScoresFromServer.length; i++) {
+        if (
+          !averageScoresFromServer[i].acf ||
+          !averageScoresFromServer[i].acf.response_scores
+        )
+          continue;
+        averageScoresCounter += 1;
+        const scoresObjectForResponse =
+          averageScoresFromServer[i].acf.response_scores;
+        for (const [key, value] of Object.entries(scoresObjectForResponse)) {
+          this.addScoreToSection(key, value);
+        }
+      }
+      // eslint-disable-next-line no-unused-vars
+      for (const [key, value] of Object.entries(this.averageScores)) {
+        this.averageScores[key] /= averageScoresCounter;
+      }
+    },
+    addScoreToSection(section, score) {
+      if (!Object.prototype.hasOwnProperty.call(this.averageScores, section))
+        this.averageScores[section] = 0;
+      this.averageScores[section] += parseInt(score);
     },
   },
 };

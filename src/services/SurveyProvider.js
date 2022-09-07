@@ -1,17 +1,44 @@
 import _ from "lodash";
+import axios from "axios";
+
+const axiosConfig = {
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: "",
+  },
+};
 
 export default class SurveyProvider {
+  instance;
+
+  constructor() {
+    this.getAndSaveAuthToken();
+  }
+
+  static getInstance() {
+    if (!this.instance) {
+      this.instance = new SurveyProvider();
+    }
+
+    return this.instance;
+  }
+
   surveys = [
     {
       id: 1,
       name: "Survey of Graduates",
       dropdown_name: "Student",
-      section_descriptions: [
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-      ],
+      section_descriptions: {
+        "Section A":
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+        "Section B":
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+        "Section C":
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+        "Section D":
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+      },
       survey: {
         title: "Survey of Graduates",
         description:
@@ -1528,5 +1555,63 @@ export default class SurveyProvider {
 
   getSurvey(id) {
     return _.find(this.surveys, { id: id });
+  }
+
+  getSurveyResponsesFromServer() {
+    return new Promise(function callback(resolve, reject) {
+      axios
+        .get(
+          "https://www.eqafit.org/wp-json/wp/v2/survey_responses/",
+          axiosConfig
+        )
+        .then(function (response) {
+          if (response.status > 300) {
+            reject(response);
+          }
+          resolve(response.data);
+        })
+        .catch(function (error) {
+          reject(error);
+        });
+    });
+  }
+
+  sendSurveyResponseToServer(data) {
+    return new Promise(function callback(resolve, reject) {
+      axios
+        .post(
+          "https://www.eqafit.org/wp-json/wp/v2/survey_responses/",
+          data,
+          axiosConfig
+        )
+        .then(function (response) {
+          if (response.status > 300) {
+            reject(response);
+          }
+          resolve(response.data);
+        })
+        .catch(function (error) {
+          reject(error);
+        });
+    });
+  }
+
+  getAndSaveAuthToken() {
+    const data = {
+      username: import.meta.env.VITE_REST_API_AUTH_USERNAME,
+      password: import.meta.env.VITE_REST_API_AUTH_USERPASSWORD,
+    };
+    axios
+      .post(
+        "https://www.eqafit.org/wp-json/jwt-auth/v1/token",
+        data,
+        axiosConfig
+      )
+      .then(function (response) {
+        axiosConfig.headers.Authorization = "Bearer " + response.data.token;
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
   }
 }

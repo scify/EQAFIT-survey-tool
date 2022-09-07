@@ -31,20 +31,9 @@
   </div>
 </template>
 <script>
-import axios from "axios";
+import SurveyProvider from "@/services/SurveyProvider";
 // eslint-disable-next-line no-undef
 Survey.StylesManager.applyTheme("modern");
-
-const axiosConfig = {
-  headers: {
-    "content-Type": "multipart/form-data",
-    Accept: "application/json",
-    "Cache-Control": "no-cache, no-store, must-revalidate",
-    Pragma: "no-cache",
-    Expires: "0",
-    Authorization: "",
-  },
-};
 
 export default {
   name: "SurveyComponent",
@@ -61,12 +50,13 @@ export default {
       sectionScores: {},
       loading: false,
       error: null,
+      surveyProvider: null,
     };
   },
-  created() {},
+  created() {
+    this.surveyProvider = SurveyProvider.getInstance();
+  },
   mounted() {
-    axiosConfig.headers.Authorization =
-      "Basic " + import.meta.env.VITE_REST_API_AUTH_TOKEN;
     // eslint-disable-next-line no-undef
     this.surveyModel = new Survey.Model(this.survey.survey);
     this.surveyModel.data = {
@@ -152,22 +142,18 @@ export default {
           response_json: response,
           response_scores: this.sectionScores,
         },
+        status: "publish",
       };
       let instance = this;
-      axios
-        .post(
-          "https://www.eqafit.org/wp-json/wp/v2/survey_responses/",
-          data,
-          axiosConfig
-        )
-        // eslint-disable-next-line no-unused-vars
-        .then(function (response) {
-          console.log(response);
-          instance.$emit("surveyCompleted", instance.sectionScores);
+      this.error = null;
+      console.log(instance.sectionScores);
+      this.surveyProvider
+        .sendSurveyResponseToServer(data)
+        .then(() => {
           instance.loading = false;
+          instance.$emit("surveyCompleted", instance.sectionScores);
         })
-        // eslint-disable-next-line no-unused-vars
-        .catch(function (error) {
+        .catch((error) => {
           instance.loading = false;
           instance.error = error;
         });

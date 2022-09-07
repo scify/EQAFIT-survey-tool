@@ -98,19 +98,4 @@
     }
 
   }
-
-  #survey-loader {
-    --bs-spinner-width: 8rem;
-    --bs-spinner-height: 8rem;
-    --bs-spinner-border-width: 0.5em;
-    border: var(--bs-spinner-border-width) solid color(color02);
-    border-right-color: transparent;
-  }
-
-  .error {
-    margin-right: 0;
-    width: 100% !important;
-    max-width: none;
-    font-size: larger;
-  }
 }
