@@ -20,4 +20,13 @@ export default defineConfig({
       modules: path.join(__dirname, "node_modules"),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        entryFileNames: `[name].js`,
+        chunkFileNames: `[name].js`,
+        assetFileNames: `[name].[ext]`,
+      },
+    },
+  },
 });
