@@ -115,13 +115,20 @@ export default {
       this.error = null;
       // eslint-disable-next-line no-unused-vars
       for (const [key, value] of Object.entries(sender.data)) {
-        if (sender.data[key] instanceof Object) {
+        if (value instanceof Object) {
           const section = this.getQuestionSectionByQuestionName(key);
           // eslint-disable-next-line no-unused-vars,no-empty
-          for (const [objKey, objValue] of Object.entries(sender.data[key])) {
+          for (const [objKey, objValue] of Object.entries(value)) {
             if (objKey.startsWith("Row") || parseInt(objValue))
               this.addScoreToSection(section, objValue);
           }
+        } else if (parseInt(this.parseValue(value))) {
+          const newValue = parseInt(this.parseValue(value));
+          const section = this.getQuestionSectionByQuestionName(key);
+          this.addScoreToSection(section, newValue);
+        } else if (parseInt(value)) {
+          const section = this.getQuestionSectionByQuestionName(key);
+          this.addScoreToSection(section, value);
         }
       }
       for (const [key, value] of Object.entries(this.sectionScores)) {
@@ -136,6 +143,9 @@ export default {
         this.loading = false;
         this.$emit("surveyCompleted", this.sectionScores);
       }
+    },
+    parseValue(str) {
+      return str.substring(str.indexOf("_") + 1);
     },
     getQuestionSectionByQuestionName(questionName) {
       const page = this.surveyModel.getPageByQuestion(
@@ -159,7 +169,6 @@ export default {
         },
         status: "publish",
       };
-      console.log(this.sectionScores);
       let instance = this;
       this.error = null;
       this.surveyProvider
