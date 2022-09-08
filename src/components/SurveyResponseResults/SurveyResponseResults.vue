@@ -53,10 +53,11 @@
                 >
                   {{ section }}
                 </button>
+                {{ section }}
               </h2>
               <div
                 :id="'collapse_' + index"
-                class="accordion-collapse collapse"
+                class="accordion-collapse collapse show"
                 :class="{ show: !index }"
                 :aria-labelledby="'heading_' + index"
                 :data-bs-parent="'accordion_' + index"
@@ -219,7 +220,7 @@ export default {
           !averageScoresFromServer[i].acf ||
           !averageScoresFromServer[i].acf.response_scores ||
           !averageScoresFromServer[i].acf.survey_id ||
-          averageScoresFromServer[i].acf.survey_id !== this.surveyId
+          parseInt(averageScoresFromServer[i].acf.survey_id) !== this.surveyId
         )
           continue;
         averageScoresCounter += 1;
@@ -232,6 +233,7 @@ export default {
       // eslint-disable-next-line no-unused-vars
       for (const [key, value] of Object.entries(this.averageScores)) {
         this.averageScores[key] /= averageScoresCounter;
+        this.averageScores[key] = Math.round(this.averageScores[key]);
       }
     },
     addScoreToSection(section, score) {
