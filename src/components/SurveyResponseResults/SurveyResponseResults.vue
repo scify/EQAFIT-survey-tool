@@ -217,7 +217,9 @@ export default {
       for (let i = 0; i < averageScoresFromServer.length; i++) {
         if (
           !averageScoresFromServer[i].acf ||
-          !averageScoresFromServer[i].acf.response_scores
+          !averageScoresFromServer[i].acf.response_scores ||
+          !averageScoresFromServer[i].acf.survey_id ||
+          averageScoresFromServer[i].acf.survey_id !== this.surveyId
         )
           continue;
         averageScoresCounter += 1;
