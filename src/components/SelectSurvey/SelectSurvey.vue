@@ -8,7 +8,7 @@
               <div class="col-2 text-center offset-1">
                 <p class="intro text-start">I am a...</p>
               </div>
-              <div class="col-4 text-center">
+              <div class="col-4 text-center" ref="select">
                 <VueMultiSelect
                   v-model="selected"
                   :options="options"
@@ -52,7 +52,10 @@
             />
             <label class="form-check-label" for="flexCheckDefault">
               I consent with the
-              <a class="text-decoration-none" href="https://docs.google.com/document/d/1miM6bfhRJprlWe-6iECZGcwxZpb1SIPiJyhY0bTa7sA/" target="_blank"
+              <a
+                class="text-decoration-none"
+                href="https://docs.google.com/document/d/1miM6bfhRJprlWe-6iECZGcwxZpb1SIPiJyhY0bTa7sA/"
+                target="_blank"
                 >Privacy Policy.</a
               >
             </label>
@@ -106,6 +109,7 @@ export default {
   },
   mounted() {
     this.loading = false;
+    this.scrollTo("select");
     this.surveys = this.surveyProvider.getSurveys();
   },
   methods: {
@@ -122,6 +126,13 @@ export default {
     },
     shouldShowMessageToAcceptPrivacyPolicy() {
       return !this.consentChecked && this.buttonClicked;
+    },
+    scrollTo(refName) {
+      const element = this.$refs[refName];
+      const top = element.offsetTop;
+      setTimeout(function () {
+        window.scrollTo(0, top);
+      }, 300);
     },
   },
 };

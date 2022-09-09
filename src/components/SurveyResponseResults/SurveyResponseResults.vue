@@ -119,7 +119,7 @@ export default {
     this.surveyProvider = SurveyProvider.getInstance();
   },
   mounted() {
-    this.$refs.results.scrollTo(0, 0);
+    this.scrollTo("results");
     this.loading = true;
     this.survey = this.surveyProvider.getSurvey(this.surveyId);
     if (Object.keys(this.userScores).length < 3) this.chartType = "bar";
@@ -240,6 +240,13 @@ export default {
       if (!Object.prototype.hasOwnProperty.call(this.averageScores, section))
         this.averageScores[section] = 0;
       this.averageScores[section] += parseInt(score);
+    },
+    scrollTo(refName) {
+      const element = this.$refs[refName];
+      const top = element.offsetTop;
+      setTimeout(function () {
+        window.scrollTo(0, top);
+      }, 300);
     },
   },
 };
