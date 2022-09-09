@@ -16,7 +16,7 @@
         </div>
       </div>
     </div>
-    <div class="container mb-6">
+    <div class="container mb-6" ref="results">
       <div class="row mb-4">
         <div class="col-12">
           <h1>Results</h1>
@@ -53,7 +53,6 @@
                 >
                   {{ section }}
                 </button>
-                {{ section }}
               </h2>
               <div
                 :id="'collapse_' + index"
@@ -120,6 +119,7 @@ export default {
     this.surveyProvider = SurveyProvider.getInstance();
   },
   mounted() {
+    this.$refs.results.scrollTo(0, 0);
     this.loading = true;
     this.survey = this.surveyProvider.getSurvey(this.surveyId);
     if (Object.keys(this.userScores).length < 3) this.chartType = "bar";
