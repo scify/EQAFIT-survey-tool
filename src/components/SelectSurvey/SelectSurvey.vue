@@ -52,7 +52,7 @@
             />
             <label class="form-check-label" for="flexCheckDefault">
               I consent with the
-              <a class="text-decoration-none" href="#" target="_blank"
+              <a class="text-decoration-none" href="https://docs.google.com/document/d/1miM6bfhRJprlWe-6iECZGcwxZpb1SIPiJyhY0bTa7sA/" target="_blank"
                 >Privacy Policy.</a
               >
             </label>
