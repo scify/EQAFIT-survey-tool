@@ -115,8 +115,16 @@ export default {
       this.error = null;
       // eslint-disable-next-line no-unused-vars
       for (const [key, value] of Object.entries(sender.data)) {
+        const section = this.getQuestionSectionByQuestionName(key);
+        if (
+          !Object.prototype.hasOwnProperty.call(
+            this.survey.section_max_scores,
+            section
+          )
+        ) {
+          continue;
+        }
         if (value instanceof Object) {
-          const section = this.getQuestionSectionByQuestionName(key);
           // eslint-disable-next-line no-unused-vars,no-empty
           for (const [objKey, objValue] of Object.entries(value)) {
             if (objKey.startsWith("Row") || parseInt(objValue))
@@ -124,10 +132,8 @@ export default {
           }
         } else if (parseInt(this.parseValue(value))) {
           const newValue = parseInt(this.parseValue(value));
-          const section = this.getQuestionSectionByQuestionName(key);
           this.addScoreToSection(section, newValue);
         } else if (parseInt(value)) {
-          const section = this.getQuestionSectionByQuestionName(key);
           this.addScoreToSection(section, value);
         }
       }
@@ -169,6 +175,7 @@ export default {
         },
         status: "publish",
       };
+      console.log(data);
       let instance = this;
       this.error = null;
       this.surveyProvider
