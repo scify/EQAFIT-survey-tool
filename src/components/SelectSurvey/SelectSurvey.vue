@@ -1,25 +1,6 @@
 <template>
   <div class="SelectSurvey w-100">
     <div class="container">
-      <div class="row mb-2">
-        <div class="col">
-          <h1>Online Quality Service:</h1>
-        </div>
-      </div>
-      <div class="row mb-2">
-        <div class="col">
-          <h2 class="fw-light">Self-assessment tool for VET providers</h2>
-        </div>
-      </div>
-      <div class="row mb-5">
-        <div class="col">
-          <p>
-            For each scenario, choose the answer that you deem to be fitting.
-            When you answer to all scenarios, you will be able to view your
-            results, with tips on how to improve!
-          </p>
-        </div>
-      </div>
       <div class="row mb-3">
         <div class="col">
           <div class="container-fluid">

@@ -3,9 +3,7 @@
     <div class="container-fluid mb-4" v-if="shouldShowBackButton()">
       <div class="row">
         <div class="col text-start">
-          <button class="btn btn-light btn-sm" @click="goBack">
-            <i class="bi bi-caret-left-fill mr-2"></i>Back
-          </button>
+          <button class="btn btn-light btn-sm" @click="goBack">Back</button>
         </div>
       </div>
     </div>

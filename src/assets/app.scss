@@ -97,10 +97,8 @@ body {
 
 #app {
   max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-
   font-weight: normal;
+  margin: 0 auto 20rem;
 }
 
 a,
@@ -225,4 +223,12 @@ a:hover {
 
 .mb-6 {
   margin-bottom: 5rem;
+}
+
+@font-face {
+  font-display: block;
+  font-family: bootstrap-icons;
+  src: url("../../node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2")
+      format("woff2"),
+    url("../../node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff") format("woff") !important;
 }
