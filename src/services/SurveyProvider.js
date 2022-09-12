@@ -52,6 +52,7 @@ export default class SurveyProvider {
         logoPosition: "right",
         pages: [
           {
+            id: 1,
             name: "Section A – Graduate Profile",
             elements: [
               {
@@ -367,6 +368,7 @@ export default class SurveyProvider {
             title: "Section A – Graduate Profile",
           },
           {
+            id: 2,
             name: "Section B – Evaluation of the VET institution’s quality",
             elements: [
               {
@@ -611,6 +613,7 @@ export default class SurveyProvider {
             title: "Section B – Evaluation of the VET institution’s quality",
           },
           {
+            id: 3,
             name: "Section C – Graduate employment path post-graduation",
             elements: [
               {
@@ -1248,6 +1251,7 @@ export default class SurveyProvider {
             title: "Section C – Graduate employment path post-graduation",
           },
           {
+            id: 4,
             name: "Section D – Evaluation of the study against work requirements",
             elements: [
               {
@@ -1578,6 +1582,7 @@ export default class SurveyProvider {
         logoPosition: "right",
         pages: [
           {
+            id: 1,
             name: "Section A – Company Profile",
             elements: [
               {
@@ -1681,6 +1686,7 @@ export default class SurveyProvider {
             ],
           },
           {
+            id: 2,
             name: "Section B – Evaluation of the employee",
             elements: [
               {
@@ -1816,6 +1822,7 @@ export default class SurveyProvider {
             ],
           },
           {
+            id: 3,
             name: "Section C – Evaluation of the employee against work requirements",
             elements: [
               {
@@ -2028,6 +2035,7 @@ export default class SurveyProvider {
         logoPosition: "right",
         pages: [
           {
+            id: 1,
             name: "Section A – VET Profile",
             elements: [
               {
@@ -2205,6 +2213,7 @@ export default class SurveyProvider {
             ],
           },
           {
+            id: 2,
             name: "Section B – Evaluation of the VET institution’s quality",
             elements: [
               {
@@ -2403,6 +2412,7 @@ export default class SurveyProvider {
             ],
           },
           {
+            id: 3,
             name: "Section C – Graduate employment path post-graduation",
             elements: [
               {

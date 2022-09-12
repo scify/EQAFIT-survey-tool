@@ -207,7 +207,11 @@ export default {
   },
   methods: {
     showAnonymousModeModal() {
-      this.anonymousModeModal.show();
+      if (this.selected.length === 1) {
+        this.showToast("You should select <b>2</b> or more sections.");
+      } else {
+        this.anonymousModeModal.show();
+      }
     },
     selectSurveySections() {
       this.anonymousModeModal.hide();

@@ -32,6 +32,7 @@
 </template>
 <script>
 import SurveyProvider from "@/services/SurveyProvider";
+import AnalyticsLogger from "@/services/AnalyticsLogger";
 // eslint-disable-next-line no-undef
 Survey.StylesManager.applyTheme("modern");
 
@@ -55,54 +56,31 @@ export default {
       loading: false,
       error: null,
       surveyProvider: null,
+      analyticsLogger: null,
+      t0: null,
+      surveyLocalStorageKey: "",
     };
   },
   created() {
     this.surveyProvider = SurveyProvider.getInstance();
+    this.analyticsLogger = AnalyticsLogger.getInstance();
+    let sectionIds = this.survey.survey.pages.flatMap((i) => i.id);
+    this.surveyLocalStorageKey =
+      "eqafit_survey_" +
+      this.survey.id +
+      "_" +
+      sectionIds.join("_") +
+      "_response";
   },
   mounted() {
     // eslint-disable-next-line no-undef
     this.surveyModel = new Survey.Model(this.survey.survey);
-    // this.surveyModel.data = {
-    //   question1: "item2",
-    //   question2: "item2",
-    //   question3: "2022-09-07T21:00:00.000Z",
-    //   question4: "2022-09-08T21:00:00.000Z",
-    //   question5: "item3",
-    //   question6: "item2",
-    //   question7: ["item7"],
-    //   question42: "item4",
-    //   question9: "item2",
-    //   question10: "item2",
-    //   question8: "item2",
-    //   question11: "item10",
-    //   question13: { Row2: "4", Row3: "4", Row4: "4", Row5: "4", Row6: "4" },
-    //   question15: {
-    //     Row1: "4",
-    //     Row2: "4",
-    //     Row3: "4",
-    //     Row4: "4",
-    //     Row5: "4",
-    //     Row6: "4",
-    //   },
-    //   question14: {
-    //     Row1: "5",
-    //     Row2: "5",
-    //     Row4: "5",
-    //     Row3: "5",
-    //     Row5: "5",
-    //     Row6: "5",
-    //     Row7: "5",
-    //     Row8: "5",
-    //     Row9: "5",
-    //     Row10: "5",
-    //     Row11: "5",
-    //     Row12: "5",
-    //     Row13: "5",
-    //     Row14: "5",
-    //   },
-    //   question16: "item2",
-    // };
+    const responseJSON = window.localStorage.getItem(
+      this.surveyLocalStorageKey
+    );
+    if (responseJSON && JSON.parse(responseJSON))
+      this.surveyModel.data = JSON.parse(responseJSON);
+    this.surveyModel.onValueChanged.add(this.saveSurveyResponseProgress);
     this.surveyModel.onComplete.add(this.saveSurveyResponse);
     let instance = this;
     setTimeout(function () {
@@ -110,6 +88,21 @@ export default {
     }, 500);
   },
   methods: {
+    // eslint-disable-next-line no-unused-vars
+    saveSurveyResponseProgress(sender, options) {
+      const responseJSON = window.localStorage.getItem(
+        this.surveyLocalStorageKey
+      );
+      if (!responseJSON || !JSON.parse(responseJSON))
+        this.analyticsLogger.logEvent("survey_respond_begin", {
+          name: this.survey.name,
+        });
+      window.localStorage.setItem(
+        this.surveyLocalStorageKey,
+        JSON.stringify(sender.data)
+      );
+      if (!this.t0) this.t0 = performance.now();
+    },
     saveSurveyResponse(sender) {
       this.loading = true;
       this.error = null;
@@ -183,6 +176,12 @@ export default {
         .then(() => {
           instance.loading = false;
           instance.$emit("surveyCompleted", instance.sectionScores);
+          const time = performance.now() - instance.t0;
+          const name = instance.survey.name;
+          instance.analyticsLogger.logEvent("survey_respond_complete", {
+            name: name,
+            time_to_complete: time,
+          });
         })
         .catch((error) => {
           instance.loading = false;
