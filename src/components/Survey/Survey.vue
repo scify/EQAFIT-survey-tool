@@ -8,7 +8,16 @@
           </div>
         </div>
         <div class="row mb-5 survey-container">
-          <div class="col">
+          <div class="col-12 mb-4">
+            <button
+              @click="skipCurrentSection()"
+              class="btn btn-primary"
+              :disabled="!allowUserToSkipSection"
+            >
+              Skip current section
+            </button>
+          </div>
+          <div class="col-12">
             <div id="survey"></div>
           </div>
         </div>
@@ -59,6 +68,7 @@ export default {
       analyticsLogger: null,
       t0: null,
       surveyLocalStorageKey: "",
+      allowUserToSkipSection: false,
     };
   },
   created() {
@@ -73,6 +83,7 @@ export default {
       "_response";
   },
   mounted() {
+    let instance = this;
     // eslint-disable-next-line no-undef
     this.surveyModel = new Survey.Model(this.survey.survey);
     const responseJSON = window.localStorage.getItem(
@@ -82,12 +93,19 @@ export default {
       this.surveyModel.data = JSON.parse(responseJSON);
     this.surveyModel.onValueChanged.add(this.saveSurveyResponseProgress);
     this.surveyModel.onComplete.add(this.saveSurveyResponse);
-    let instance = this;
+    // eslint-disable-next-line no-unused-vars
+    this.surveyModel.onCurrentPageChanged.add(function (editor, options) {
+      instance.allowUserToSkipSection =
+        !instance.surveyModel.currentPage.name.includes("Section A");
+    });
     setTimeout(function () {
       instance.surveyModel.render("survey");
     }, 500);
   },
   methods: {
+    skipCurrentSection() {
+      this.surveyModel.removePage(this.surveyModel.currentPage);
+    },
     // eslint-disable-next-line no-unused-vars
     saveSurveyResponseProgress(sender, options) {
       const responseJSON = window.localStorage.getItem(

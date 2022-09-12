@@ -59,7 +59,7 @@ export default class SurveyProvider {
                 type: "radiogroup",
                 name: "question1",
                 title: "Gender:",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "item1",
@@ -75,7 +75,7 @@ export default class SurveyProvider {
                 type: "radiogroup",
                 name: "question2",
                 title: "Age:",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "item1",
@@ -105,7 +105,7 @@ export default class SurveyProvider {
                 type: "datepicker",
                 inputType: "date",
                 dateFormat: "mm/dd/yy",
-                isRequired: true,
+                isRequired: false,
               },
               {
                 name: "question4",
@@ -113,14 +113,14 @@ export default class SurveyProvider {
                 type: "datepicker",
                 inputType: "date",
                 dateFormat: "mm/dd/yy",
-                isRequired: true,
+                isRequired: false,
               },
               {
                 type: "radiogroup",
                 name: "question5",
                 title:
                   "What level of training did you complete at the VET institution?",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "item1",
@@ -142,7 +142,7 @@ export default class SurveyProvider {
                 type: "dropdown",
                 name: "question6",
                 title: "What is your area of specialization?",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "item1",
@@ -179,7 +179,7 @@ export default class SurveyProvider {
                 name: "question7",
                 title:
                   "What parameters were important for your decision to study at the particular VET institution?",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "item2",
@@ -218,7 +218,7 @@ export default class SurveyProvider {
                 name: "question42",
                 title:
                   "On average, how many hours per week did you spend studying outside of classes?",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "item1",
@@ -247,7 +247,7 @@ export default class SurveyProvider {
                 name: "question9",
                 title:
                   "Did you do any internships (at workplace environments) during your study at the institution?",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "item1",
@@ -263,7 +263,7 @@ export default class SurveyProvider {
                 type: "radiogroup",
                 name: "question10",
                 title: "Were you employed during your study?",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "item1",
@@ -284,7 +284,7 @@ export default class SurveyProvider {
                 name: "question8",
                 title:
                   "What kind of connection/contact do you have with the institution post-graduation?",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "item1",
@@ -318,7 +318,7 @@ export default class SurveyProvider {
                 type: "dropdown",
                 name: "question11",
                 title: "What is your current situation?",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "item1",
@@ -376,7 +376,7 @@ export default class SurveyProvider {
                 name: "question13",
                 title:
                   "How would you rate your satisfaction with the training conditions you experienced at the VET institution?",
-                isRequired: true,
+                isRequired: false,
                 columns: [
                   {
                     value: "1",
@@ -427,7 +427,7 @@ export default class SurveyProvider {
                 name: "question15",
                 title:
                   "How would you rate your satisfaction with the provisions related to employment and internships during your study course?",
-                isRequired: true,
+                isRequired: false,
                 columns: [
                   {
                     value: "1",
@@ -478,7 +478,7 @@ export default class SurveyProvider {
                 name: "question14",
                 title:
                   "To what extent do you feel that you have acquired the following skills/competencies upon graduation?",
-                isRequired: true,
+                isRequired: false,
                 columns: [
                   {
                     value: "1",
@@ -565,7 +565,7 @@ export default class SurveyProvider {
                 name: "question16",
                 title:
                   "During the course of your study, did you ever consider canceling your participation?",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "item1",
@@ -582,7 +582,7 @@ export default class SurveyProvider {
                 name: "question17",
                 visibleIf: "{question16} = 'item1'",
                 title: "If yes, please specify why:",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "item1",
@@ -621,7 +621,7 @@ export default class SurveyProvider {
                 name: "question18",
                 title:
                   "What was your status in the first six months after graduating? (Multiple answers possible)",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "item1",
@@ -671,7 +671,7 @@ export default class SurveyProvider {
                 type: "dropdown",
                 name: "question19",
                 title: "When did you start your first job after graduation?",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "1count_4",
@@ -711,7 +711,7 @@ export default class SurveyProvider {
                 type: "dropdown",
                 name: "question41",
                 title: "When did you start your first job after graduation?",
-                isRequired: true,
+                isRequired: false,
                 choicesFromQuestion: "question19",
                 choices: [
                   {
@@ -752,7 +752,7 @@ export default class SurveyProvider {
                 type: "radiogroup",
                 name: "question20",
                 title: "When did you start searching for a job?",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "item1",
@@ -772,7 +772,7 @@ export default class SurveyProvider {
                 type: "dropdown",
                 name: "question21",
                 title: "How long have you searched for your job?",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "1count_4",
@@ -805,7 +805,7 @@ export default class SurveyProvider {
                 name: "question22",
                 title:
                   "How did you search for your first job after graduation? (Multiple answers possible)",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "item1",
@@ -872,7 +872,7 @@ export default class SurveyProvider {
                 name: "question23",
                 title:
                   "Which was the most successful method for finding your first job? (Choose only one answer)",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "item1",
@@ -939,7 +939,7 @@ export default class SurveyProvider {
                 name: "question24",
                 title:
                   "How many employers have you managed to approach after the completion of your study programme?",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "item1",
@@ -968,7 +968,7 @@ export default class SurveyProvider {
                 name: "question25",
                 title:
                   "From how many employers did you receive calls for interviews?",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "item1",
@@ -997,7 +997,7 @@ export default class SurveyProvider {
                 name: "question26",
                 title:
                   "What are the difficulties you encountered in looking for a job?",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "item1",
@@ -1028,7 +1028,7 @@ export default class SurveyProvider {
                 name: "question27",
                 title:
                   "How many jobs (including your current one) have you had altogether since graduation?",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "item1",
@@ -1056,7 +1056,7 @@ export default class SurveyProvider {
                 type: "radiogroup",
                 name: "question28",
                 title: "Are you currently employed?",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "item1",
@@ -1073,7 +1073,7 @@ export default class SurveyProvider {
                 name: "question29",
                 visibleIf: "{question28} = 'item1'",
                 title: "How long have you been working in your current job?",
-                isRequired: true,
+                isRequired: false,
                 requiredIf: "{question28} = 'item1'",
                 choices: [
                   {
@@ -1103,7 +1103,7 @@ export default class SurveyProvider {
                 name: "question30",
                 visibleIf: "{question28} = 'item1'",
                 title: "Which economic sector are you currently employed in?",
-                isRequired: true,
+                isRequired: false,
                 requiredIf: "{question28} = 'item1'",
                 choices: [
                   {
@@ -1143,7 +1143,7 @@ export default class SurveyProvider {
                 name: "question31",
                 visibleIf: "{question28} = 'item1'",
                 title: "What type of employer do you work for?",
-                isRequired: true,
+                isRequired: false,
                 requiredIf: "{question28} = 'item1'",
                 choices: [
                   {
@@ -1175,7 +1175,7 @@ export default class SurveyProvider {
                 name: "question32",
                 visibleIf: "{question28} = 'item1'",
                 title: "What is your current net monthly income?",
-                isRequired: true,
+                isRequired: false,
                 requiredIf: "{question28} = 'item1'",
                 choices: [
                   {
@@ -1218,7 +1218,7 @@ export default class SurveyProvider {
                 visibleIf: "{question28} = 'item1'",
                 title:
                   "What is the size of the company you are currently employed at?",
-                isRequired: true,
+                isRequired: false,
                 requiredIf: "{question28} = 'item1'",
                 choices: [
                   {
@@ -1259,7 +1259,7 @@ export default class SurveyProvider {
                 name: "question34",
                 title:
                   "To what extent are the following skills/competences required in your current employment?",
-                isRequired: true,
+                isRequired: false,
                 columns: [
                   {
                     value: "1",
@@ -1346,7 +1346,7 @@ export default class SurveyProvider {
                 name: "question35",
                 title:
                   "To what extent do you believe that the skills and knowledge you acquired during your study are utilized in your current job?",
-                isRequired: true,
+                isRequired: false,
                 columns: [
                   {
                     value: "1",
@@ -1381,7 +1381,7 @@ export default class SurveyProvider {
                 name: "question36",
                 title:
                   "To what extent are you satisfied with your current job situation?",
-                isRequired: true,
+                isRequired: false,
                 columns: [
                   {
                     value: "1",
@@ -1416,7 +1416,7 @@ export default class SurveyProvider {
                 name: "question37",
                 title:
                   "If your job is not closely related to your study, why did you choose this job?",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "item1",
@@ -1459,7 +1459,7 @@ export default class SurveyProvider {
                 name: "question38",
                 title:
                   "In your opinion, which degree/qualification level best matches your current job?",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "item1",
@@ -1484,7 +1484,7 @@ export default class SurveyProvider {
                 name: "question39",
                 title:
                   "Have you started or are you planning to start another course of studies after the study at our VET institution?",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "item1",
@@ -1513,7 +1513,7 @@ export default class SurveyProvider {
                 name: "question40",
                 title:
                   "Why did you start/why are you planning to start another course of studies?",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "item1",
@@ -1589,7 +1589,7 @@ export default class SurveyProvider {
                 type: "radiogroup",
                 name: "question1",
                 title: "Please specify the type of your organization:",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "item1",
@@ -1619,7 +1619,7 @@ export default class SurveyProvider {
                 type: "radiogroup",
                 name: "question2",
                 title: "Please specify the main sector of your company:",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "item1",
@@ -1655,7 +1655,7 @@ export default class SurveyProvider {
                 type: "radiogroup",
                 name: "question3",
                 title: "How many employees do you currently have?",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "item1",
@@ -1694,7 +1694,7 @@ export default class SurveyProvider {
                 name: "question4",
                 title:
                   "How would you rate your satisfaction with the training and knowledge of your employee?",
-                isRequired: true,
+                isRequired: false,
                 columns: [
                   {
                     value: "1",
@@ -1737,7 +1737,7 @@ export default class SurveyProvider {
                 name: "question5",
                 title:
                   "To what extent do you feel that the employee has acquired the following skills/competencies after graduation?",
-                isRequired: true,
+                isRequired: false,
                 columns: [
                   {
                     value: "0",
@@ -1830,7 +1830,7 @@ export default class SurveyProvider {
                 name: "question6",
                 title:
                   "To what extent do you require the following skills/competences in your company?",
-                isRequired: true,
+                isRequired: false,
                 columns: [
                   {
                     value: "0",
@@ -1916,7 +1916,7 @@ export default class SurveyProvider {
                 type: "matrix",
                 name: "question7",
                 title: "About Skills and Knowledge Acquisition",
-                isRequired: true,
+                isRequired: false,
                 columns: [
                   {
                     value: "0",
@@ -1950,7 +1950,7 @@ export default class SurveyProvider {
                 type: "matrix",
                 name: "question8",
                 title: "About Employee Satisfaction",
-                isRequired: true,
+                isRequired: false,
                 columns: [
                   {
                     value: "0",
@@ -1984,7 +1984,7 @@ export default class SurveyProvider {
                 type: "radiogroup",
                 name: "question9",
                 title: "What kind of degree is most valid for your company?",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "item1",
@@ -2043,7 +2043,7 @@ export default class SurveyProvider {
                 name: "question1",
                 title:
                   "What level of training do you offer at your VET institution?",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "item1",
@@ -2065,7 +2065,7 @@ export default class SurveyProvider {
                 type: "radiogroup",
                 name: "question2",
                 title: "Within what sector do you offer programs?",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "item1",
@@ -2101,7 +2101,7 @@ export default class SurveyProvider {
                 type: "radiogroup",
                 name: "question3",
                 title: "How long are your programs on average?",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "item1",
@@ -2121,7 +2121,7 @@ export default class SurveyProvider {
                 type: "radiogroup",
                 name: "question4",
                 title: "Do your programs include work-based learning?",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "1",
@@ -2138,7 +2138,7 @@ export default class SurveyProvider {
                 name: "question5",
                 title:
                   "How long do the work-based learning periods last on average?",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "1count_1",
@@ -2166,7 +2166,7 @@ export default class SurveyProvider {
                 type: "radiogroup",
                 name: "question6",
                 title: "Do you have an alumni network?",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "1",
@@ -2184,7 +2184,7 @@ export default class SurveyProvider {
                 visibleIf: "{question6} = '1'",
                 title:
                   "If Yes, how do you usually keep in touch with your alumni?",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "item1",
@@ -2221,7 +2221,7 @@ export default class SurveyProvider {
                 name: "question8",
                 title:
                   "How would you rate the quality of your VET institution?",
-                isRequired: true,
+                isRequired: false,
                 columns: [
                   {
                     value: "1",
@@ -2276,7 +2276,7 @@ export default class SurveyProvider {
                 name: "question9",
                 title:
                   "How would you rate the provisions related to employment and internships of your VET institution? ",
-                isRequired: true,
+                isRequired: false,
                 columns: [
                   {
                     value: "1",
@@ -2327,7 +2327,7 @@ export default class SurveyProvider {
                 name: "question10",
                 title:
                   "To what extent do you think that students have acquired the following skills/competencies upon graduation?",
-                isRequired: true,
+                isRequired: false,
                 columns: [
                   {
                     value: "0",
@@ -2420,7 +2420,7 @@ export default class SurveyProvider {
                 name: "question11",
                 title:
                   "How long does it usually take for students from your institution to find a job?",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "1count_4",
@@ -2460,7 +2460,7 @@ export default class SurveyProvider {
                 type: "radiogroup",
                 name: "question12",
                 title: "Do you offer support in students job search?",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "1",
@@ -2477,7 +2477,7 @@ export default class SurveyProvider {
                 name: "question13",
                 title:
                   "Do you follow up on students after their graduation in terms of employment?",
-                isRequired: true,
+                isRequired: false,
                 choices: [
                   {
                     value: "1",
