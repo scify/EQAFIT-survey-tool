@@ -124,8 +124,9 @@ export default {
     saveSurveyResponse(sender) {
       this.loading = true;
       this.error = null;
+      const data = this.clearSurveyAnswersFromSkippedQuestions(sender.data);
       // eslint-disable-next-line no-unused-vars
-      for (const [key, value] of Object.entries(sender.data)) {
+      for (const [key, value] of Object.entries(data)) {
         const section = this.getQuestionSectionByQuestionName(key);
         if (
           !Object.prototype.hasOwnProperty.call(
@@ -160,6 +161,16 @@ export default {
         this.loading = false;
         this.$emit("surveyCompleted", this.sectionScores);
       }
+    },
+    clearSurveyAnswersFromSkippedQuestions(data) {
+      let filtered = {};
+      for (const [key, value] of Object.entries(data)) {
+        const page = this.surveyModel.getPageByQuestion(
+          this.surveyModel.getQuestionByName(key)
+        );
+        if (page) filtered[key] = value;
+      }
+      return filtered;
     },
     parseValue(str) {
       return str.substring(str.indexOf("_") + 1);
