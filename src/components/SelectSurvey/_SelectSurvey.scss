@@ -3,4 +3,39 @@
 @import "../../assets/survey-select";
 
 .SelectSurvey {
+  .select-survey-container {
+    .target-group-box {
+      width: 100%;
+      height: 280px;
+      background-color: color(color03);
+      color: color(color02);
+      text-align: center;
+      margin-right: 5px;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      transition: 0.5s;
+
+      &:hover {
+        cursor: pointer;
+        border: 3px solid color(color02);
+        box-shadow: 0 0 3px color(color02);
+        margin-top: -10px;
+      }
+    }
+
+    .target-group-box.selected {
+      border: 3px solid color(color02);
+    }
+  }
 }

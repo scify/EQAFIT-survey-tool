@@ -6,57 +6,65 @@
           <h1>Survey: {{ survey.name }}</h1>
         </div>
       </div>
-      <div class="row mb-5">
+      <div class="row mb-4">
         <div class="col">
           <p v-if="survey.survey" v-html="survey.survey.description"></p>
         </div>
       </div>
-
-      <div class="row mb-3">
+      <div class="row mb-0">
         <div class="col">
-          <div class="container-fluid">
-            <div class="row survey-selector-container">
-              <div
-                class="col-lg-2 col-md-3 text-center offset-lg-1 offset-md-0"
-              >
-                <p class="intro text-start">
-                  Choose more sections for your quiz:
-                </p>
-              </div>
-              <div class="col-6 text-center">
-                <VueMultiselect
-                  v-model="selected"
-                  :options="surveySections"
-                  :multiple="true"
-                  :close-on-select="false"
-                  track-by="name"
-                  label="name"
-                  placeholder="Select the sections"
-                  :searchable="false"
-                  :allow-empty="true"
-                  @remove="removeOption"
-                >
-                </VueMultiselect>
-              </div>
-              <div class="col-3 text-center">
-                <button
-                  :disabled="!selected"
-                  class="btn btn-primary btn-start w-75"
-                  @click="showAnonymousModeModal"
-                >
-                  Take the Quiz
-                  <span
-                    class="spinner-border spinner-border-sm ms-1"
-                    role="status"
-                    aria-hidden="true"
-                    v-if="loading"
-                  ></span>
-                </button>
-              </div>
-            </div>
-          </div>
+          <h5>
+            Select the sections you would like to include to the quiz.<br /><br />You
+            should choose <b>at least 2</b> sections:
+          </h5>
         </div>
       </div>
+
+      <!--      <div class="row mb-3">-->
+      <!--        <div class="col">-->
+      <!--          <div class="container-fluid">-->
+      <!--            <div class="row survey-selector-container">-->
+      <!--              <div-->
+      <!--                class="col-lg-2 col-md-3 text-center offset-lg-1 offset-md-0"-->
+      <!--              >-->
+      <!--                <p class="intro text-start">-->
+      <!--                  Choose more sections for your quiz:-->
+      <!--                </p>-->
+      <!--              </div>-->
+      <!--              <div class="col-6 text-center">-->
+      <!--                <VueMultiselect-->
+      <!--                  v-model="selected"-->
+      <!--                  :options="surveySections"-->
+      <!--                  :multiple="true"-->
+      <!--                  :close-on-select="false"-->
+      <!--                  track-by="name"-->
+      <!--                  label="name"-->
+      <!--                  placeholder="Select the sections"-->
+      <!--                  :searchable="false"-->
+      <!--                  :allow-empty="true"-->
+      <!--                  @remove="removeOption"-->
+      <!--                >-->
+      <!--                </VueMultiselect>-->
+      <!--              </div>-->
+      <!--              <div class="col-3 text-center">-->
+      <!--                <button-->
+      <!--                  :disabled="!selected"-->
+      <!--                  class="btn btn-primary btn-start w-75"-->
+      <!--                  @click="showAnonymousModeModal"-->
+      <!--                >-->
+      <!--                  Take the Quiz-->
+      <!--                  <span-->
+      <!--                    class="spinner-border spinner-border-sm ms-1"-->
+      <!--                    role="status"-->
+      <!--                    aria-hidden="true"-->
+      <!--                    v-if="loading"-->
+      <!--                  ></span>-->
+      <!--                </button>-->
+      <!--              </div>-->
+      <!--            </div>-->
+      <!--          </div>-->
+      <!--        </div>-->
+      <!--      </div>-->
       <div
         class="toast position-absolute"
         :class="{ show: toastVisible }"
@@ -75,17 +83,53 @@
         </div>
         <div class="toast-body" v-html="toastMessage"></div>
       </div>
-      <div style="margin-top: 7rem">
+      <div style="margin-top: 5rem">
         <div
-          class="row mb-5"
+          class="row mb-5 p-4 section"
+          :class="{ selected: surveySections[index].selected }"
           v-for="(page, index) in survey.survey.pages"
           :key="'section_' + index"
         >
-          <div class="col">
+          <div class="col-1">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              v-model="surveySections[index].selected"
+              :id="'check_section_' + index"
+              @change="onCheckedChange(surveySections[index], $event)"
+            />
+          </div>
+          <div class="col-11">
             <h4 class="mb-2 section-title">{{ page.name }}</h4>
             <p>
               {{ survey.section_descriptions[getSectionShortName(page.name)] }}
             </p>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-lg-4 col-md-6 col-sm-12 text-center mx-auto">
+            <button
+              :disabled="!surveySections.length"
+              class="btn btn-primary btn-lg btn-block btn-start w-100"
+              @click="proceed"
+            >
+              Take the Quiz
+              <span
+                class="spinner-border spinner-border-sm ms-1"
+                role="status"
+                aria-hidden="true"
+                v-if="loading"
+              ></span>
+            </button>
+          </div>
+        </div>
+        <div class="row mb-5">
+          <div class="col">
+            <p
+              v-if="errorMessage"
+              class="text-danger ms-1"
+              v-html="errorMessage"
+            ></p>
           </div>
         </div>
       </div>
@@ -106,11 +150,18 @@
           <h5 class="modal-title" id="exampleModalLabel">
             Data save confirmation
           </h5>
+          <button
+            @click="anonymousModeModal.hide()"
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
         </div>
         <div class="modal-body pb-5">
           <div class="container">
             <div class="row my-4">
-              <div class="col-8 mx-auto text-center">
+              <div class="col-8 mx-auto text-start">
                 <h5>Do you consent with the data processing?</h5>
               </div>
             </div>
@@ -126,7 +177,7 @@
               </div>
             </div>
             <div class="row mb-5">
-              <div class="col-5 mx-auto text-start">
+              <div class="col-8 mx-auto text-start">
                 <div class="form-check">
                   <input
                     class="form-check-input"
@@ -140,11 +191,11 @@
                 </div>
               </div>
             </div>
-            <div class="row action-buttons">
-              <div class="col-4 text-center mx-auto">
+            <div class="row">
+              <div class="col-lg-5 col-md-8 col-sm-12 text-center mx-auto">
                 <button
                   type="button"
-                  class="btn btn-primary w-100"
+                  class="btn btn-primary w-100 btn-lg"
                   @click="selectSurveySections"
                 >
                   Continue
@@ -159,13 +210,14 @@
 </template>
 
 <script>
-import VueMultiselect from "vue-multiselect";
+// import VueMultiselect from "vue-multiselect";
 import SurveyProvider from "@/services/SurveyProvider";
 import { Modal } from "bootstrap";
+import _ from "lodash";
 
 export default {
   name: "SelectSurveySections",
-  components: { VueMultiselect },
+  // components: { VueMultiselect },
   emits: ["surveySectionsSelected"],
   props: {
     surveyId: {
@@ -181,9 +233,10 @@ export default {
       surveyProvider: null,
       survey: {},
       surveySections: [],
-      selected: [],
+      // selected: [],
       anonymousModeModal: null,
       consentMode: true,
+      errorMessage: null,
     };
   },
   created() {
@@ -195,45 +248,45 @@ export default {
     this.anonymousModeModal = new Modal(this.$refs.anonymousModeModal);
     for (let i = 0; i < this.survey.survey.pages.length; i++) {
       const section = {
-        index: i,
+        id: i,
         name: this.survey.survey.pages[i].name,
         required: i === 0,
+        selected: i === 0,
       };
       this.surveySections.push(section);
-      if (i === 0) {
-        this.selected.unshift(section);
-      }
     }
   },
   methods: {
-    showAnonymousModeModal() {
-      if (this.selected.length === 1) {
-        this.showToast("You should select <b>2</b> or more sections.");
+    proceed() {
+      if (this.getSelectedSections().length === 1) {
+        this.errorMessage = "You should select <b>2</b> or more sections.";
       } else {
         this.anonymousModeModal.show();
       }
     },
     selectSurveySections() {
       this.anonymousModeModal.hide();
-      if (this.selected.length === 1) {
-        this.showToast("You should select <b>2</b> or more sections.");
-      } else {
-        const ids = this.selected.map((item) => item.id);
-        let pagesToKeep = [];
-        for (let i = 0; i < ids.length; i++) {
-          pagesToKeep.push(this.survey.survey.pages[i]);
-        }
-        this.survey.survey.pages = pagesToKeep;
-        this.$emit("surveySectionsSelected", {
-          survey: this.survey,
-          consentMode: this.consentMode,
-        });
+      const ids = this.getSelectedSections().map((item) => item.id);
+      let pagesToKeep = [];
+      for (let i = 0; i < ids.length; i++) {
+        pagesToKeep.push(this.survey.survey.pages[i]);
       }
+      this.survey.survey.pages = pagesToKeep;
+      this.$emit("surveySectionsSelected", {
+        survey: this.survey,
+        consentMode: this.consentMode,
+      });
     },
-    removeOption(option) {
+    getSelectedSections() {
+      return _.filter(this.surveySections, "selected");
+    },
+    onCheckedChange(option, event) {
+      this.errorMessage = null;
       if (option.required) {
-        this.selected.unshift(option);
+        event.target.checked = true;
+        option.selected = true;
         this.showToast("This Section is required.");
+        return false;
       }
     },
     showToast(message) {
@@ -242,7 +295,7 @@ export default {
       let instance = this;
       setTimeout(function () {
         instance.toastVisible = false;
-      }, 5000);
+      }, 115000);
     },
     getSectionShortName(sectionName) {
       // we need to extract section name from the whole title

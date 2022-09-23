@@ -3,13 +3,31 @@
 @import "../../assets/survey-select";
 
 .SelectSurveySections {
-
   .section-title {
     color: color(color02);
   }
 
   .toast {
     right: 0;
+    background-color: white;
+    z-index: 1;
   }
 
+  input[type="checkbox"] {
+    /* Double-sized Checkboxes */
+    -ms-transform: scale(1.5); /* IE */
+    -moz-transform: scale(1.5); /* FF */
+    -webkit-transform: scale(1.5); /* Safari and Chrome */
+    -o-transform: scale(1.5); /* Opera */
+    padding: 12px;
+    margin-top: 10px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .section.selected {
+    background-color: lighten(color(color06), 15%);
+  }
 }

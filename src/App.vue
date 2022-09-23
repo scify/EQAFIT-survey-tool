@@ -57,16 +57,17 @@ export default {
   },
   mounted() {
     this.appState = State.select_survey;
-    this.appState = State.survey_response_in_progress;
-    this.surveyId = 1;
-    const survey = this.surveyProvider.getSurvey(1);
-    const ids = [1, 2, 3];
-    let pagesToKeep = [];
-    for (let i = 0; i < ids.length; i++) {
-      pagesToKeep.push(survey.survey.pages[i]);
-    }
-    survey.survey.pages = pagesToKeep;
-    this.survey = survey;
+    // this.appState = State.select_survey_sections;
+    // this.surveyId = 1;
+    // const survey = this.surveyProvider.getSurvey(1);
+    // this.survey = survey;
+    // // const ids = [1, 2, 3];
+    // // let pagesToKeep = [];
+    // // for (let i = 0; i < ids.length; i++) {
+    // //   pagesToKeep.push(survey.survey.pages[i]);
+    // // }
+    // // survey.survey.pages = pagesToKeep;
+    // // this.survey = survey;
   },
   data: function () {
     return {

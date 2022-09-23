@@ -1,31 +1,87 @@
 <template>
   <div class="SelectSurvey w-100">
     <div class="container">
+      <div class="row mb-4">
+        <h1>
+          Online Quality Service:<br />
+          <span>Self-assessment tool for VET Providers</span>
+        </h1>
+        <p class="mt-5">
+          During this year we will develop the Online Quality Service, a strong
+          self-assessment tool for VET Providers to boost their overall quality
+          and efficiency. This tool will include all the results from the
+          previous work done in the project, such as:
+          <b>
+            the quality criteria, the guidelines and tools, the tracking system
+            and the model for feedback loop.
+          </b>
+        </p>
+        <br />
+      </div>
       <div class="row mb-3">
         <div class="col">
-          <div class="container-fluid">
-            <div class="row survey-selector-container">
-              <div class="col-2 text-center offset-1">
-                <p class="intro text-start">I am a...</p>
+          <div class="container-fluid p-0" ref="select">
+            <!--            <div class="row survey-selector-container">-->
+            <!--              <div class="col-2 text-center offset-1">-->
+            <!--                <p class="intro text-start">I am a...</p>-->
+            <!--              </div>-->
+            <!--              <div class="col-4 text-center">-->
+            <!--                <VueMultiSelect-->
+            <!--                  v-model="selected"-->
+            <!--                  :options="options"-->
+            <!--                  :multiple="false"-->
+            <!--                  :close-on-select="true"-->
+            <!--                  track-by="name"-->
+            <!--                  label="name"-->
+            <!--                  placeholder="Select an option"-->
+            <!--                  :searchable="false"-->
+            <!--                  :allow-empty="false"-->
+            <!--                >-->
+            <!--                </VueMultiSelect>-->
+            <!--              </div>-->
+            <!--              <div class="col-4 text-center">-->
+            <!--                <button-->
+            <!--                  :disabled="!selected"-->
+            <!--                  class="btn btn-primary btn-start w-75"-->
+            <!--                  @click="selectSurvey"-->
+            <!--                >-->
+            <!--                  Start-->
+            <!--                  <span-->
+            <!--                    class="spinner-border spinner-border-sm ms-1"-->
+            <!--                    role="status"-->
+            <!--                    aria-hidden="true"-->
+            <!--                    v-if="loading"-->
+            <!--                  ></span>-->
+            <!--                </button>-->
+            <!--              </div>-->
+            <!--            </div>-->
+            <div class="row mb-4">
+              <div class="col">
+                <h3><b>I am a...</b></h3>
               </div>
-              <div class="col-4 text-center" ref="select">
-                <VueMultiSelect
-                  v-model="selected"
-                  :options="options"
-                  :multiple="false"
-                  :close-on-select="true"
-                  track-by="name"
-                  label="name"
-                  placeholder="Select an option"
-                  :searchable="false"
-                  :allow-empty="false"
+            </div>
+            <div class="row select-survey-container mb-4">
+              <div
+                class="col-4"
+                v-for="(survey, index) in options"
+                :key="'survey_' + index"
+              >
+                <div
+                  @click="setSelected(survey)"
+                  class="target-group-box mb-5"
+                  :class="{ selected: selected.value === survey.value }"
                 >
-                </VueMultiSelect>
+                  <h2 class="mt-2">
+                    <b>{{ survey.name }}</b>
+                  </h2>
+                </div>
               </div>
-              <div class="col-4 text-center">
+            </div>
+            <div class="row mb-3">
+              <div class="col-lg-4 col-md-6 col-sm-12 text-center mx-auto">
                 <button
-                  :disabled="!selected"
-                  class="btn btn-primary btn-start w-75"
+                  :disabled="!selected.value"
+                  class="btn btn-primary btn-start w-100 btn-lg btn-block"
                   @click="selectSurvey"
                 >
                   Start
@@ -74,18 +130,18 @@
 
 <script>
 import SurveyProvider from "@/services/SurveyProvider";
-import VueMultiSelect from "vue-multiselect";
+// import VueMultiSelect from "vue-multiselect";
 
 export default {
   name: "SelectSurvey",
-  components: { VueMultiSelect },
+  // components: { VueMultiSelect },
   emits: ["surveySelected"],
   data: function () {
     return {
       loading: false,
       surveyProvider: null,
       surveys: [],
-      selected: null,
+      selected: {},
       consentChecked: false,
       buttonClicked: false,
       options: [
@@ -126,6 +182,9 @@ export default {
     },
     shouldShowMessageToAcceptPrivacyPolicy() {
       return !this.consentChecked && this.buttonClicked;
+    },
+    setSelected(survey) {
+      this.selected = survey;
     },
     scrollTo(refName) {
       const element = this.$refs[refName];
