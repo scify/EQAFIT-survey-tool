@@ -19,12 +19,12 @@
     <div class="container mb-6" ref="results">
       <div class="row mb-4">
         <div class="col-12">
-          <h1>Results</h1>
+          <h1>{{ $t("results") }}</h1>
         </div>
       </div>
       <div class="row mb-5">
         <div class="col">
-          <h4 class="results-label">Overall</h4>
+          <h4 class="results-label">{{ $t("overall") }}</h4>
         </div>
       </div>
       <div class="row mb-5">
@@ -62,11 +62,10 @@
                 :data-bs-parent="'accordion_' + index"
               >
                 <div class="accordion-body">
-                  {{ survey.section_descriptions[section] }}<br /><br /><a
-                    class="mt-3"
-                    href="#"
-                    >Read how to improve</a
-                  >
+                  {{ survey.section_descriptions[index].description
+                  }}<br /><br /><a class="mt-3" href="#">{{
+                    $t("read_how_to_improve")
+                  }}</a>
                 </div>
               </div>
             </div>
@@ -123,7 +122,12 @@ export default {
     this.loading = true;
     this.survey = this.surveyProvider.getSurvey(this.surveyId);
     if (Object.keys(this.userScores).length < 3) this.chartType = "bar";
-    this.userResponsesLabels = Object.keys(this.userScores);
+    const surveySectionIds = Object.keys(this.userScores);
+    for (let i = 0; i < surveySectionIds.length; i++) {
+      this.userResponsesLabels.push(
+        this.survey.survey.pages[surveySectionIds[i] - 1].name
+      );
+    }
     this.userResponsesValues = Object.values(this.userScores);
     if (this.consentMode) {
       this.getResponsesFromServerAndInitializeData();

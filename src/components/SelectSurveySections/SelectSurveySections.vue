@@ -13,58 +13,9 @@
       </div>
       <div class="row mb-0">
         <div class="col">
-          <h5>
-            Select the sections you would like to include to the quiz.<br /><br />You
-            should choose <b>at least 2</b> sections:
-          </h5>
+          <h5 v-html="$t('select_sections')"></h5>
         </div>
       </div>
-
-      <!--      <div class="row mb-3">-->
-      <!--        <div class="col">-->
-      <!--          <div class="container-fluid">-->
-      <!--            <div class="row survey-selector-container">-->
-      <!--              <div-->
-      <!--                class="col-lg-2 col-md-3 text-center offset-lg-1 offset-md-0"-->
-      <!--              >-->
-      <!--                <p class="intro text-start">-->
-      <!--                  Choose more sections for your quiz:-->
-      <!--                </p>-->
-      <!--              </div>-->
-      <!--              <div class="col-6 text-center">-->
-      <!--                <VueMultiselect-->
-      <!--                  v-model="selected"-->
-      <!--                  :options="surveySections"-->
-      <!--                  :multiple="true"-->
-      <!--                  :close-on-select="false"-->
-      <!--                  track-by="name"-->
-      <!--                  label="name"-->
-      <!--                  placeholder="Select the sections"-->
-      <!--                  :searchable="false"-->
-      <!--                  :allow-empty="true"-->
-      <!--                  @remove="removeOption"-->
-      <!--                >-->
-      <!--                </VueMultiselect>-->
-      <!--              </div>-->
-      <!--              <div class="col-3 text-center">-->
-      <!--                <button-->
-      <!--                  :disabled="!selected"-->
-      <!--                  class="btn btn-primary btn-start w-75"-->
-      <!--                  @click="showAnonymousModeModal"-->
-      <!--                >-->
-      <!--                  Take the Quiz-->
-      <!--                  <span-->
-      <!--                    class="spinner-border spinner-border-sm ms-1"-->
-      <!--                    role="status"-->
-      <!--                    aria-hidden="true"-->
-      <!--                    v-if="loading"-->
-      <!--                  ></span>-->
-      <!--                </button>-->
-      <!--              </div>-->
-      <!--            </div>-->
-      <!--          </div>-->
-      <!--        </div>-->
-      <!--      </div>-->
       <div
         class="toast position-absolute"
         :class="{ show: toastVisible }"
@@ -102,7 +53,7 @@
           <div class="col-11">
             <h4 class="mb-2 section-title">{{ page.name }}</h4>
             <p>
-              {{ survey.section_descriptions[getSectionShortName(page.name)] }}
+              {{ survey.section_descriptions[page.id - 1].description }}
             </p>
           </div>
         </div>
@@ -113,7 +64,7 @@
               class="btn btn-primary btn-lg btn-block btn-start w-100"
               @click="proceed"
             >
-              Take the Quiz
+              {{ $t("take_the_quiz") }}
               <span
                 class="spinner-border spinner-border-sm ms-1"
                 role="status"
@@ -148,7 +99,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">
-            Data save confirmation
+            {{ $t("data_save_confirmation") }}
           </h5>
           <button
             @click="anonymousModeModal.hide()"
@@ -162,18 +113,12 @@
           <div class="container">
             <div class="row my-4">
               <div class="col-8 mx-auto text-start">
-                <h5>Do you consent with the data processing?</h5>
+                <h5>{{ $t("data_consent_title") }}</h5>
               </div>
             </div>
             <div class="row mb-3">
               <div class="col-8 mx-auto text-start">
-                <p>
-                  If you consent with the processing of your survey responses,
-                  <b
-                    >you will be able to compare your final scores with the
-                    average scores by other users.</b
-                  >
-                </p>
+                <p v-html="$t('data_consent_message')"></p>
               </div>
             </div>
             <div class="row mb-5">
@@ -186,7 +131,7 @@
                     id="flexCheckDefault"
                   />
                   <label class="form-check-label" for="flexCheckDefault">
-                    I consent with the data processing.
+                    {{ $t("data_consent_label") }}
                   </label>
                 </div>
               </div>
@@ -198,7 +143,7 @@
                   class="btn btn-primary w-100 btn-lg"
                   @click="selectSurveySections"
                 >
-                  Continue
+                  {{ $t("continue") }}
                 </button>
               </div>
             </div>
@@ -210,14 +155,12 @@
 </template>
 
 <script>
-// import VueMultiselect from "vue-multiselect";
 import SurveyProvider from "@/services/SurveyProvider";
 import { Modal } from "bootstrap";
 import _ from "lodash";
 
 export default {
   name: "SelectSurveySections",
-  // components: { VueMultiselect },
   emits: ["surveySectionsSelected"],
   props: {
     surveyId: {
@@ -233,7 +176,6 @@ export default {
       surveyProvider: null,
       survey: {},
       surveySections: [],
-      // selected: [],
       anonymousModeModal: null,
       consentMode: true,
       errorMessage: null,
@@ -259,7 +201,7 @@ export default {
   methods: {
     proceed() {
       if (this.getSelectedSections().length === 1) {
-        this.errorMessage = "You should select <b>2</b> or more sections.";
+        this.errorMessage = this.$t("sections_number_message");
       } else {
         this.anonymousModeModal.show();
       }
@@ -285,7 +227,7 @@ export default {
       if (option.required) {
         event.target.checked = true;
         option.selected = true;
-        this.showToast("This Section is required.");
+        this.showToast(this.$t("section_required"));
         return false;
       }
     },
@@ -296,11 +238,6 @@ export default {
       setTimeout(function () {
         instance.toastVisible = false;
       }, 115000);
-    },
-    getSectionShortName(sectionName) {
-      // we need to extract section name from the whole title
-      const positionOfSecondSpace = sectionName.split(" ", 2).join(" ").length;
-      return sectionName.substring(0, positionOfSecondSpace);
     },
   },
 };

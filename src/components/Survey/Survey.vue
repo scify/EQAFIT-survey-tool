@@ -4,7 +4,7 @@
       <div class="container">
         <div class="row mb-5">
           <div class="col">
-            <h2>Quiz Questions: {{ survey.name }}</h2>
+            <h2>{{ $t("survey_quiz_questions_title") }} {{ survey.name }}</h2>
           </div>
         </div>
         <div class="row mb-5 survey-container">
@@ -14,7 +14,7 @@
               class="btn btn-primary"
               :disabled="!allowUserToSkipSection"
             >
-              Skip current section
+              {{ $t("skip_current_section") }}
             </button>
           </div>
           <div class="col-12">
@@ -127,11 +127,11 @@ export default {
       const data = this.clearSurveyAnswersFromSkippedQuestions(sender.data);
       // eslint-disable-next-line no-unused-vars
       for (const [key, value] of Object.entries(data)) {
-        const section = this.getQuestionSectionByQuestionName(key);
+        const sectionId = this.getSectionIndexByQuestionName(key);
         if (
           !Object.prototype.hasOwnProperty.call(
             this.survey.section_max_scores,
-            section
+            sectionId
           )
         ) {
           continue;
@@ -140,13 +140,13 @@ export default {
           // eslint-disable-next-line no-unused-vars,no-empty
           for (const [objKey, objValue] of Object.entries(value)) {
             if (objKey.startsWith("Row") || parseInt(objValue))
-              this.addScoreToSection(section, objValue);
+              this.addScoreToSection(sectionId, objValue);
           }
         } else if (parseInt(this.parseValue(value))) {
           const newValue = parseInt(this.parseValue(value));
-          this.addScoreToSection(section, newValue);
+          this.addScoreToSection(sectionId, newValue);
         } else if (parseInt(value)) {
-          this.addScoreToSection(section, value);
+          this.addScoreToSection(sectionId, value);
         }
       }
       for (const [key, value] of Object.entries(this.sectionScores)) {
@@ -175,18 +175,19 @@ export default {
     parseValue(str) {
       return str.substring(str.indexOf("_") + 1);
     },
-    getQuestionSectionByQuestionName(questionName) {
+    getSectionIndexByQuestionName(questionName) {
       const page = this.surveyModel.getPageByQuestion(
         this.surveyModel.getQuestionByName(questionName)
       );
-      // we need to extract section name from the whole title
-      const positionOfSecondSpace = page.name.split(" ", 2).join(" ").length;
-      return page.name.substring(0, positionOfSecondSpace);
+      for (let i = 0; i < this.surveyModel.pages.length; i++) {
+        if (this.surveyModel.pages[i].name === page.name) return i + 1;
+      }
+      return null;
     },
-    addScoreToSection(section, score) {
-      if (!Object.prototype.hasOwnProperty.call(this.sectionScores, section))
-        this.sectionScores[section] = 0;
-      this.sectionScores[section] += parseInt(score);
+    addScoreToSection(sectionId, score) {
+      if (!Object.prototype.hasOwnProperty.call(this.sectionScores, sectionId))
+        this.sectionScores[sectionId] = 0;
+      this.sectionScores[sectionId] += parseInt(score);
     },
     postDataToServer(response) {
       const data = {
@@ -197,7 +198,6 @@ export default {
         },
         status: "publish",
       };
-      console.log(data);
       let instance = this;
       this.error = null;
       this.surveyProvider

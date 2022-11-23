@@ -2,13 +2,20 @@ import { fileURLToPath, URL } from "node:url";
 import * as path from "path";
 import { defineConfig, splitVendorChunkPlugin } from "vite";
 import vue from "@vitejs/plugin-vue";
+import vueI18n from "@intlify/vite-plugin-vue-i18n";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue(), splitVendorChunkPlugin()],
+  plugins: [
+    vue(),
+    splitVendorChunkPlugin(),
+    vueI18n({
+      include: path.resolve(__dirname, "./src/i18n/**"),
+    }),
+  ],
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
@@ -18,6 +25,7 @@ export default defineConfig({
       "jquery-ui-css": "jquery-ui-dist/jquery-ui.css",
       // bind to modules;
       modules: path.join(__dirname, "node_modules"),
+      "vue-i18n": "vue-i18n/dist/vue-i18n.runtime.esm-bundler.js",
     },
   },
   build: {

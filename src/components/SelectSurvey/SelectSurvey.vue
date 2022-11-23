@@ -3,61 +3,20 @@
     <div class="container">
       <div class="row mb-4">
         <h1>
-          Online Quality Service:<br />
-          <span>Self-assessment tool for VET Providers</span>
+          {{ $t("online_quality_service") }}<br />
+          <span>{{ $t("self_assessment_tool_title") }}</span>
         </h1>
-        <p class="mt-5">
-          During this year we will develop the Online Quality Service, a strong
-          self-assessment tool for VET Providers to boost their overall quality
-          and efficiency. This tool will include all the results from the
-          previous work done in the project, such as:
-          <b>
-            the quality criteria, the guidelines and tools, the tracking system
-            and the model for feedback loop.
-          </b>
-        </p>
+        <p class="mt-5" v-html="$t('intro_message')"></p>
         <br />
       </div>
       <div class="row mb-3">
         <div class="col">
           <div class="container-fluid p-0" ref="select">
-            <!--            <div class="row survey-selector-container">-->
-            <!--              <div class="col-2 text-center offset-1">-->
-            <!--                <p class="intro text-start">I am a...</p>-->
-            <!--              </div>-->
-            <!--              <div class="col-4 text-center">-->
-            <!--                <VueMultiSelect-->
-            <!--                  v-model="selected"-->
-            <!--                  :options="options"-->
-            <!--                  :multiple="false"-->
-            <!--                  :close-on-select="true"-->
-            <!--                  track-by="name"-->
-            <!--                  label="name"-->
-            <!--                  placeholder="Select an option"-->
-            <!--                  :searchable="false"-->
-            <!--                  :allow-empty="false"-->
-            <!--                >-->
-            <!--                </VueMultiSelect>-->
-            <!--              </div>-->
-            <!--              <div class="col-4 text-center">-->
-            <!--                <button-->
-            <!--                  :disabled="!selected"-->
-            <!--                  class="btn btn-primary btn-start w-75"-->
-            <!--                  @click="selectSurvey"-->
-            <!--                >-->
-            <!--                  Start-->
-            <!--                  <span-->
-            <!--                    class="spinner-border spinner-border-sm ms-1"-->
-            <!--                    role="status"-->
-            <!--                    aria-hidden="true"-->
-            <!--                    v-if="loading"-->
-            <!--                  ></span>-->
-            <!--                </button>-->
-            <!--              </div>-->
-            <!--            </div>-->
             <div class="row mb-4">
               <div class="col">
-                <h3><b>I am a...</b></h3>
+                <h3>
+                  <b>{{ $t("i_am_a") }}</b>
+                </h3>
               </div>
             </div>
             <div class="row select-survey-container mb-4">
@@ -84,7 +43,7 @@
                   class="btn btn-primary btn-start w-100 btn-lg btn-block"
                   @click="selectSurvey"
                 >
-                  Start
+                  {{ $t("start") }}
                   <span
                     class="spinner-border spinner-border-sm ms-1"
                     role="status"
@@ -107,19 +66,20 @@
               id="flexCheckDefault"
             />
             <label class="form-check-label" for="flexCheckDefault">
-              I consent with the
+              {{ $t("i_consent") }}
               <a
                 class="text-decoration-none"
                 href="https://docs.google.com/document/d/1miM6bfhRJprlWe-6iECZGcwxZpb1SIPiJyhY0bTa7sA/"
                 target="_blank"
-                >Privacy Policy.</a
               >
+                {{ $t("privacy_policy") }}
+              </a>
             </label>
             <span
               v-if="shouldShowMessageToAcceptPrivacyPolicy()"
               class="text-danger ms-1"
             >
-              It is required to accept the privacy policy.
+              {{ $t("privacy_required") }}
             </span>
           </div>
         </div>
@@ -130,11 +90,9 @@
 
 <script>
 import SurveyProvider from "@/services/SurveyProvider";
-// import VueMultiSelect from "vue-multiselect";
 
 export default {
   name: "SelectSurvey",
-  // components: { VueMultiSelect },
   emits: ["surveySelected"],
   data: function () {
     return {
@@ -146,15 +104,15 @@ export default {
       buttonClicked: false,
       options: [
         {
-          name: "Student",
+          name: null,
           value: 1,
         },
         {
-          name: "Company",
+          name: null,
           value: 2,
         },
         {
-          name: "VET provider",
+          name: null,
           value: 3,
         },
       ],
@@ -162,13 +120,22 @@ export default {
   },
   created() {
     this.surveyProvider = new SurveyProvider();
+    this.globalEventBus.on("lang_changed", function (params) {
+      console.log(params);
+    });
   },
   mounted() {
+    this.setTranslatableResources();
     this.loading = false;
     this.scrollTo("select");
     this.surveys = this.surveyProvider.getSurveys();
   },
   methods: {
+    setTranslatableResources() {
+      this.options[0].name = this.$t("student");
+      this.options[1].name = this.$t("company");
+      this.options[2].name = this.$t("vet_provider");
+    },
     selectSurvey() {
       let instance = this;
       this.buttonClicked = true;

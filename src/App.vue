@@ -1,9 +1,32 @@
 <template>
   <main>
+    <div class="container">
+      <div class="row my-4">
+        <div class="col-lg-2 col-md-3 col-sm-9">
+          <div class="locale-changer form-group">
+            <select
+              v-model="$i18n.locale"
+              @change="setLang"
+              class="form-control"
+            >
+              <option
+                v-for="(lang, i) in languages"
+                :key="`Lang${i}`"
+                :value="lang.code"
+              >
+                {{ lang.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="container-fluid mb-4" v-if="shouldShowBackButton()">
       <div class="row">
         <div class="col text-start">
-          <button class="btn btn-light btn-sm" @click="goBack">Back</button>
+          <button class="btn btn-light btn-sm" @click="goBack">
+            {{ $t("back") }}
+          </button>
         </div>
       </div>
     </div>
@@ -39,6 +62,7 @@ import SelectSurveySections from "@/components/SelectSurveySections/SelectSurvey
 import SurveyComponent from "@/components/Survey/Survey.vue";
 import SurveyProvider from "@/services/SurveyProvider";
 import SurveyResponseResults from "@/components/SurveyResponseResults/SurveyResponseResults.vue";
+import { languagesMap } from "@/i18n";
 
 const State = Object.freeze({
   select_survey: 0,
@@ -77,9 +101,11 @@ export default {
       surveyProvider: null,
       userScores: null,
       consentMode: true,
+      languages: languagesMap,
     };
   },
   created() {
+    SurveyProvider.translator = this.$t;
     this.surveyProvider = SurveyProvider.getInstance();
   },
   methods: {
@@ -113,6 +139,15 @@ export default {
     surveyCompleted(userScores) {
       this.userScores = userScores;
       this.appState = State.survey_response_results;
+    },
+    setLang(event) {
+      // const url = new URL(window.location);
+      // url.searchParams.set("lang", event.target.value);
+      // window.history.pushState({}, "", url);
+      // window.location.reload();
+      const lang = event.target.value;
+      this.$i18n.locale = lang;
+      this.globalEventBus.emit("lang_changed", lang);
     },
   },
 };
