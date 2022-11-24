@@ -144,7 +144,7 @@ export default {
           labels: this.userResponsesLabels,
           datasets: [
             {
-              label: "Your results",
+              label: this.$t("your_results"),
               data: this.userResponsesValues,
               fill: true,
               backgroundColor: "rgba(255, 99, 132, 0.2)",
@@ -174,7 +174,7 @@ export default {
       };
       if (this.consentMode) {
         chartConfig.data.datasets.push({
-          label: "Average respondent results",
+          label: this.$t("average_respondents_results"),
           data: this.averageResponsesValues,
           fill: true,
           backgroundColor: "rgba(54, 162, 235, 0.2)",

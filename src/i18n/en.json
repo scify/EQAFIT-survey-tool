@@ -1,4 +1,6 @@
 {
+  "average_respondents_results": "Average respondent results",
+  "your_results": "Your results",
   "back": "Back",
   "online_quality_service": "Online Quality Service:",
   "self_assessment_tool_title": "Self-assessment tool for VET Providers",
@@ -548,5 +550,5 @@
   "survey_3_question_12_text_0": "Yes",
   "survey_3_question_12_text_1": "No",
   "survey_3_question_13_title": "Please explain why or why not in a few sentences:",
-  "survey_3_question_14_title": "Please explain why or why not in a few sentences:"
+  "survey_3_question_14_title": "How do you collect and analyze this data?"
 }
