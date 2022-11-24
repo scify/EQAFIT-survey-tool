@@ -22,6 +22,10 @@ export const languagesMap = [
     name: "Italiano",
   },
   {
+    code: "es",
+    name: "Español",
+  },
+  {
     code: "se",
     name: "Svenska",
   },
