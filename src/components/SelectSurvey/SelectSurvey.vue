@@ -126,6 +126,11 @@ export default {
     this.loading = false;
     this.scrollTo("select");
     this.surveys = this.surveyProvider.getSurveys();
+    const instance = this;
+    // eslint-disable-next-line no-unused-vars
+    this.globalEventBus.on("lang_changed", function (lang) {
+      instance.setTranslatableResources();
+    });
   },
   methods: {
     setTranslatableResources() {
