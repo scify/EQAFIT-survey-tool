@@ -38,7 +38,7 @@
         <div
           class="row mb-5 p-4 section"
           :class="{ selected: surveySections[index].selected }"
-          v-for="(page, index) in survey.survey.pages"
+          v-for="(page, index) in surveyPages"
           :key="'section_' + index"
         >
           <div class="col-1">
@@ -179,26 +179,39 @@ export default {
       anonymousModeModal: null,
       consentMode: true,
       errorMessage: null,
+      surveyPages: [],
     };
   },
   created() {
+    const instance = this;
     this.surveyProvider = new SurveyProvider();
+    // eslint-disable-next-line no-unused-vars
+    this.globalEventBus.on("lang_changed", function (lang) {
+      instance.surveyProvider.setSurveyTranslations();
+      instance.setUpSurveySections();
+    });
   },
   mounted() {
     this.loading = false;
-    this.survey = this.surveyProvider.getSurvey(this.surveyId);
     this.anonymousModeModal = new Modal(this.$refs.anonymousModeModal);
-    for (let i = 0; i < this.survey.survey.pages.length; i++) {
-      const section = {
-        id: i,
-        name: this.survey.survey.pages[i].name,
-        required: i === 0,
-        selected: i === 0,
-      };
-      this.surveySections.push(section);
-    }
+    this.setUpSurveySections();
   },
   methods: {
+    setUpSurveySections() {
+      this.surveyProvider.setSurveyTranslations();
+      this.survey = this.surveyProvider.getSurvey(this.surveyId);
+      this.surveyPages = this.survey.survey.pages;
+      this.surveySections = [];
+      for (let i = 0; i < this.survey.survey.pages.length; i++) {
+        const section = {
+          id: i,
+          name: this.survey.survey.pages[i].name,
+          required: i === 0,
+          selected: i === 0,
+        };
+        this.surveySections.push(section);
+      }
+    },
     proceed() {
       if (this.getSelectedSections().length === 1) {
         this.errorMessage = this.$t("sections_number_message");

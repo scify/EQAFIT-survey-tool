@@ -1,11 +1,21 @@
-import el from "./el.json";
+import gr from "./gr.json";
 import en from "./en.json";
+import it from "./it.json";
+import es from "./es.json";
+import se from "./se.json";
+import sk from "./sk.json";
+import ro from "./ro.json";
 
 export const defaultLocale = "en";
 
 export const languages = {
-  el: el,
+  gr: gr,
   en: en,
+  it: it,
+  es: es,
+  se: se,
+  sk: sk,
+  ro: ro,
 };
 
 export const languagesMap = [
@@ -14,7 +24,7 @@ export const languagesMap = [
     name: "English",
   },
   {
-    code: "el",
+    code: "gr",
     name: "Ελληνικά",
   },
   {

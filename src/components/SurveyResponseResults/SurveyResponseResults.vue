@@ -92,8 +92,8 @@ export default {
       type: Object,
       required: true,
     },
-    surveyId: {
-      type: Number,
+    surveyData: {
+      type: Object,
       required: true,
     },
     consentMode: {
@@ -120,7 +120,8 @@ export default {
   mounted() {
     this.scrollTo("results");
     this.loading = true;
-    this.survey = this.surveyProvider.getSurvey(this.surveyId);
+    this.survey = this.surveyData;
+    console.log(this.survey);
     if (Object.keys(this.userScores).length < 3) this.chartType = "bar";
     const surveySectionIds = Object.keys(this.userScores);
     for (let i = 0; i < surveySectionIds.length; i++) {

@@ -42,15 +42,16 @@
       ></SelectSurveySections>
       <SurveyComponent
         v-if="appInSurveyResponseInProgressState()"
-        :survey="survey"
+        :survey-data="survey"
         :consent-mode="consentMode"
+        :app-state="appState"
         @survey-completed="surveyCompleted"
       ></SurveyComponent>
       <SurveyResponseResults
         v-if="appInSurveyResponseResultsState()"
         :user-scores="userScores"
         :consent-mode="consentMode"
-        :survey-id="surveyId"
+        :survey-data="survey"
       ></SurveyResponseResults>
     </div>
   </main>
@@ -81,6 +82,10 @@ export default {
   },
   mounted() {
     this.appState = State.select_survey;
+    let urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has("lang")) {
+      this.$i18n.locale = urlParams.get("lang");
+    }
     // this.appState = State.select_survey_sections;
     // this.surveyId = 1;
     // const survey = this.surveyProvider.getSurvey(1);
@@ -145,6 +150,9 @@ export default {
       // url.searchParams.set("lang", event.target.value);
       // window.history.pushState({}, "", url);
       // window.location.reload();
+      const url = new URL(window.location);
+      url.searchParams.set("lang", event.target.value);
+      window.history.pushState({}, "", url);
       const lang = event.target.value;
       this.$i18n.locale = lang;
       this.globalEventBus.emit("lang_changed", lang);

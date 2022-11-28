@@ -2605,6 +2605,7 @@ export default class SurveyProvider {
     );
 
     for (let i = 1; i <= numOfSections; i++) {
+      if (!this.surveys[surveyIndex].survey.pages[i - 1]) continue;
       this.surveys[surveyIndex].survey.pages[i - 1].title =
         SurveyProvider.translator(
           "survey_" + surveyId + "_page_" + i + "_title"
@@ -2633,6 +2634,7 @@ export default class SurveyProvider {
     numOfChoices,
     hasOther = false
   ) {
+    if (!this.surveys[surveyIndex].survey.pages[pageIndex]) return;
     this.surveys[surveyIndex].survey.pages[pageIndex].elements[
       questionIndex
     ].title = SurveyProvider.translator(
@@ -2661,6 +2663,7 @@ export default class SurveyProvider {
     rowCount,
     colCount
   ) {
+    if (!this.surveys[surveyIndex].survey.pages[pageIndex]) return;
     this.surveys[surveyIndex].survey.pages[pageIndex].elements[
       questionIndex
     ].title = SurveyProvider.translator(

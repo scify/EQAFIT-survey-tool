@@ -120,9 +120,6 @@ export default {
   },
   created() {
     this.surveyProvider = new SurveyProvider();
-    this.globalEventBus.on("lang_changed", function (params) {
-      console.log(params);
-    });
   },
   mounted() {
     this.setTranslatableResources();

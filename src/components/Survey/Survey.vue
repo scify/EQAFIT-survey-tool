@@ -1,6 +1,6 @@
 <template>
   <div class="Survey w-100">
-    <div v-if="survey.survey">
+    <div v-if="survey && survey.survey">
       <div class="container">
         <div class="row mb-5">
           <div class="col">
@@ -49,7 +49,7 @@ export default {
   name: "SurveyComponent",
   emits: ["surveyCompleted"],
   props: {
-    survey: {
+    surveyData: {
       type: Object,
       required: true,
     },
@@ -57,9 +57,14 @@ export default {
       type: Boolean,
       required: true,
     },
+    appState: {
+      type: Number,
+      required: true,
+    },
   },
   data: function () {
     return {
+      survey: null,
       surveyModel: null,
       sectionScores: {},
       loading: false,
@@ -72,8 +77,17 @@ export default {
     };
   },
   created() {
+    const instance = this;
     this.surveyProvider = SurveyProvider.getInstance();
     this.analyticsLogger = AnalyticsLogger.getInstance();
+    // eslint-disable-next-line no-unused-vars
+    this.globalEventBus.on("lang_changed", function (lang) {
+      if (instance.appState === 2) window.location.reload();
+    });
+  },
+  mounted() {
+    let instance = this;
+    this.survey = this.surveyData;
     let sectionIds = this.survey.survey.pages.flatMap((i) => i.id);
     this.surveyLocalStorageKey =
       "eqafit_survey_" +
@@ -81,11 +95,9 @@ export default {
       "_" +
       sectionIds.join("_") +
       "_response";
-  },
-  mounted() {
-    let instance = this;
     // eslint-disable-next-line no-undef
     this.surveyModel = new Survey.Model(this.survey.survey);
+    this.surveyModel.locale = this.$i18n.locale;
     const responseJSON = window.localStorage.getItem(
       this.surveyLocalStorageKey
     );
@@ -103,6 +115,7 @@ export default {
     }, 500);
   },
   methods: {
+    setUpSurvey() {},
     skipCurrentSection() {
       this.surveyModel.removePage(this.surveyModel.currentPage);
     },

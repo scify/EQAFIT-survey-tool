@@ -1,6 +1,6 @@
 {
   "name": "eqafit-survey-tool",
-  "version": "0.0.1-beta",
+  "version": "1.0.0-beta",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
