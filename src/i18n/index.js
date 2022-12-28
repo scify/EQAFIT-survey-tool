@@ -5,6 +5,7 @@ import es from "./es.json";
 import se from "./se.json";
 import sk from "./sk.json";
 import ro from "./ro.json";
+import de from "./de.json";
 
 export const defaultLocale = "en";
 
@@ -16,6 +17,7 @@ export const languages = {
   se: se,
   sk: sk,
   ro: ro,
+  de: de,
 };
 
 export const languagesMap = [
@@ -34,6 +36,10 @@ export const languagesMap = [
   {
     code: "es",
     name: "Español",
+  },
+  {
+    code: "de",
+    name: "Deutsch",
   },
   {
     code: "se",
