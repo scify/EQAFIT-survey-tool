@@ -63,9 +63,19 @@
               >
                 <div class="accordion-body">
                   {{ survey.section_descriptions[index].description
-                  }}<br /><br /><a class="mt-3" href="#">{{
-                    $t("read_how_to_improve")
-                  }}</a>
+                  }}<br /><br />
+
+                  <b
+                    >{{ $t("score") }}: {{ userResponsesValues[index] }} /
+                    100</b
+                  ><br /><br />
+                  <b>{{ $t("feedback") }}:</b><br />
+                  <p
+                    class="survey-result-text"
+                    v-html="getTextForResponse(index)"
+                  ></p>
+
+                  <a class="mt-3" href="#">{{ $t("read_how_to_improve") }}</a>
                 </div>
               </div>
             </div>
@@ -109,9 +119,11 @@ export default {
       surveyProvider: null,
       chartType: "radar",
       userResponsesLabels: [],
+      userResponsesShortLabels: [],
       userResponsesValues: [],
       averageResponsesValues: [],
       survey: {},
+      surveySectionIds: [],
     };
   },
   created() {
@@ -121,12 +133,16 @@ export default {
     this.scrollTo("results");
     this.loading = true;
     this.survey = this.surveyData;
-    console.log(this.survey);
     if (Object.keys(this.userScores).length < 3) this.chartType = "bar";
-    const surveySectionIds = Object.keys(this.userScores);
-    for (let i = 0; i < surveySectionIds.length; i++) {
+    this.surveySectionIds = Object.keys(this.userScores);
+    for (let i = 0; i < this.surveySectionIds.length; i++) {
+      this.userResponsesShortLabels.push(
+        this.survey.survey.pages[this.surveySectionIds[i] - 1].name
+          .split("–")[0]
+          .trim()
+      );
       this.userResponsesLabels.push(
-        this.survey.survey.pages[surveySectionIds[i] - 1].name
+        this.survey.survey.pages[this.surveySectionIds[i] - 1].name
       );
     }
     this.userResponsesValues = Object.values(this.userScores);
@@ -142,7 +158,7 @@ export default {
       const chartConfig = {
         type: this.chartType,
         data: {
-          labels: this.userResponsesLabels,
+          labels: this.userResponsesShortLabels,
           datasets: [
             {
               label: this.$t("your_results"),
@@ -252,6 +268,24 @@ export default {
       setTimeout(function () {
         window.scrollTo(0, top);
       }, 300);
+    },
+    getTextForResponse(index) {
+      const currentSectionId = parseInt(this.surveySectionIds[index]);
+      const scoreForCurrentSection = this.userResponsesValues[index];
+      let currentSectionScoreTexts = {};
+      for (let i = 0; i < this.survey.section_score_texts.length; i++) {
+        if (currentSectionId === this.survey.section_score_texts[i].section) {
+          currentSectionScoreTexts = this.survey.section_score_texts[i];
+          break;
+        }
+      }
+      for (let i = 0; i < currentSectionScoreTexts.score_texts.length; i++) {
+        if (
+          scoreForCurrentSection <
+          currentSectionScoreTexts.score_texts[i].min_score
+        )
+          return currentSectionScoreTexts.score_texts[i - 1].text;
+      }
     },
   },
 };

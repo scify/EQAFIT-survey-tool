@@ -47,6 +47,83 @@ export default class SurveyProvider {
           description: "",
         },
       ],
+      section_score_texts: [
+        {
+          section: 2,
+          score_texts: [
+            {
+              min_score: 0,
+              text: "",
+            },
+            {
+              min_score: 21,
+              text: "",
+            },
+            {
+              min_score: 41,
+              text: "",
+            },
+            {
+              min_score: 61,
+              text: "",
+            },
+            {
+              min_score: 81,
+              text: "",
+            },
+          ],
+        },
+        {
+          section: 3,
+          score_texts: [
+            {
+              min_score: 0,
+              text: "",
+            },
+            {
+              min_score: 21,
+              text: "",
+            },
+            {
+              min_score: 41,
+              text: "",
+            },
+            {
+              min_score: 61,
+              text: "",
+            },
+            {
+              min_score: 81,
+              text: "",
+            },
+          ],
+        },
+        {
+          section: 4,
+          score_texts: [
+            {
+              min_score: 0,
+              text: "",
+            },
+            {
+              min_score: 21,
+              text: "",
+            },
+            {
+              min_score: 41,
+              text: "",
+            },
+            {
+              min_score: 61,
+              text: "",
+            },
+            {
+              min_score: 81,
+              text: "",
+            },
+          ],
+        },
+      ],
       section_max_scores: {
         2: 118,
         3: 12,
@@ -1517,6 +1594,58 @@ export default class SurveyProvider {
         2: 72,
         3: 64,
       },
+      section_score_texts: [
+        {
+          section: 2,
+          score_texts: [
+            {
+              min_score: 0,
+              text: "",
+            },
+            {
+              min_score: 21,
+              text: "",
+            },
+            {
+              min_score: 41,
+              text: "",
+            },
+            {
+              min_score: 61,
+              text: "",
+            },
+            {
+              min_score: 81,
+              text: "",
+            },
+          ],
+        },
+        {
+          section: 3,
+          score_texts: [
+            {
+              min_score: 0,
+              text: "",
+            },
+            {
+              min_score: 21,
+              text: "",
+            },
+            {
+              min_score: 41,
+              text: "",
+            },
+            {
+              min_score: 61,
+              text: "",
+            },
+            {
+              min_score: 81,
+              text: "",
+            },
+          ],
+        },
+      ],
       survey: {
         title: "",
         description: "",
@@ -1971,6 +2100,83 @@ export default class SurveyProvider {
         2: 108,
         3: 6,
       },
+      section_score_texts: [
+        {
+          section: 1,
+          score_texts: [
+            {
+              min_score: 0,
+              text: "",
+            },
+            {
+              min_score: 21,
+              text: "",
+            },
+            {
+              min_score: 41,
+              text: "",
+            },
+            {
+              min_score: 61,
+              text: "",
+            },
+            {
+              min_score: 81,
+              text: "",
+            },
+          ],
+        },
+        {
+          section: 2,
+          score_texts: [
+            {
+              min_score: 0,
+              text: "",
+            },
+            {
+              min_score: 21,
+              text: "",
+            },
+            {
+              min_score: 41,
+              text: "",
+            },
+            {
+              min_score: 61,
+              text: "",
+            },
+            {
+              min_score: 81,
+              text: "",
+            },
+          ],
+        },
+        {
+          section: 3,
+          score_texts: [
+            {
+              min_score: 0,
+              text: "",
+            },
+            {
+              min_score: 21,
+              text: "",
+            },
+            {
+              min_score: 41,
+              text: "",
+            },
+            {
+              min_score: 61,
+              text: "",
+            },
+            {
+              min_score: 81,
+              text: "",
+            },
+          ],
+        },
+      ],
       survey: {
         title: "",
         description: "",
@@ -2588,6 +2794,83 @@ export default class SurveyProvider {
       SurveyProvider.translator("survey_3_question_13_title");
     this.surveys[2].survey.pages[2].elements[4].title =
       SurveyProvider.translator("survey_3_question_14_title");
+
+    this.surveys[0].section_score_texts[0].score_texts[0].text =
+      SurveyProvider.translator("survey_1_section_2_level_0_text");
+    this.surveys[0].section_score_texts[0].score_texts[1].text =
+      SurveyProvider.translator("survey_1_section_2_level_1_text");
+    this.surveys[0].section_score_texts[0].score_texts[2].text =
+      SurveyProvider.translator("survey_1_section_2_level_2_text");
+    this.surveys[0].section_score_texts[0].score_texts[3].text =
+      SurveyProvider.translator("survey_1_section_2_level_3_text");
+    this.surveys[0].section_score_texts[0].score_texts[4].text =
+      SurveyProvider.translator("survey_1_section_2_level_4_text");
+
+    this.surveys[0].section_score_texts[1].score_texts[0].text =
+      SurveyProvider.translator("survey_1_section_3_level_0_text");
+    this.surveys[0].section_score_texts[1].score_texts[1].text =
+      SurveyProvider.translator("survey_1_section_3_level_1_text");
+    this.surveys[0].section_score_texts[1].score_texts[2].text =
+      SurveyProvider.translator("survey_1_section_3_level_2_text");
+    this.surveys[0].section_score_texts[1].score_texts[3].text =
+      SurveyProvider.translator("survey_1_section_3_level_3_text");
+    this.surveys[0].section_score_texts[1].score_texts[4].text =
+      SurveyProvider.translator("survey_1_section_3_level_4_text");
+
+    this.surveys[0].section_score_texts[2].score_texts[0].text =
+      SurveyProvider.translator("survey_1_section_4_level_0_text");
+    this.surveys[0].section_score_texts[2].score_texts[1].text =
+      SurveyProvider.translator("survey_1_section_4_level_1_text");
+    this.surveys[0].section_score_texts[2].score_texts[2].text =
+      SurveyProvider.translator("survey_1_section_4_level_2_text");
+    this.surveys[0].section_score_texts[2].score_texts[3].text =
+      SurveyProvider.translator("survey_1_section_4_level_3_text");
+    this.surveys[0].section_score_texts[2].score_texts[4].text =
+      SurveyProvider.translator("survey_1_section_4_level_4_text");
+
+    this.surveys[1].section_score_texts[0].score_texts[0].text =
+      SurveyProvider.translator("survey_2_section_2_level_0_text");
+    this.surveys[1].section_score_texts[0].score_texts[1].text =
+      SurveyProvider.translator("survey_2_section_2_level_1_text");
+    this.surveys[1].section_score_texts[0].score_texts[2].text =
+      SurveyProvider.translator("survey_2_section_2_level_2_text");
+    this.surveys[1].section_score_texts[0].score_texts[3].text =
+      SurveyProvider.translator("survey_2_section_2_level_3_text");
+    this.surveys[1].section_score_texts[0].score_texts[4].text =
+      SurveyProvider.translator("survey_2_section_2_level_4_text");
+
+    this.surveys[1].section_score_texts[1].score_texts[0].text =
+      SurveyProvider.translator("survey_2_section_3_level_0_text");
+    this.surveys[1].section_score_texts[1].score_texts[1].text =
+      SurveyProvider.translator("survey_2_section_3_level_1_text");
+    this.surveys[1].section_score_texts[1].score_texts[2].text =
+      SurveyProvider.translator("survey_2_section_3_level_2_text");
+    this.surveys[1].section_score_texts[1].score_texts[3].text =
+      SurveyProvider.translator("survey_2_section_3_level_3_text");
+    this.surveys[1].section_score_texts[1].score_texts[4].text =
+      SurveyProvider.translator("survey_2_section_3_level_4_text");
+
+    this.surveys[2].section_score_texts[0].score_texts[0].text =
+      SurveyProvider.translator("survey_3_section_2_level_0_text");
+    this.surveys[2].section_score_texts[0].score_texts[1].text =
+      SurveyProvider.translator("survey_3_section_2_level_1_text");
+    this.surveys[2].section_score_texts[0].score_texts[2].text =
+      SurveyProvider.translator("survey_3_section_2_level_2_text");
+    this.surveys[2].section_score_texts[0].score_texts[3].text =
+      SurveyProvider.translator("survey_3_section_2_level_3_text");
+    this.surveys[2].section_score_texts[0].score_texts[4].text =
+      SurveyProvider.translator("survey_3_section_2_level_4_text");
+
+    this.surveys[2].section_score_texts[1].score_texts[0].text =
+      SurveyProvider.translator("survey_3_section_3_level_0_text");
+    this.surveys[2].section_score_texts[1].score_texts[1].text =
+      SurveyProvider.translator("survey_3_section_3_level_1_text");
+    this.surveys[2].section_score_texts[1].score_texts[2].text =
+      SurveyProvider.translator("survey_3_section_3_level_2_text");
+    this.surveys[2].section_score_texts[1].score_texts[3].text =
+      SurveyProvider.translator("survey_3_section_3_level_3_text");
+    this.surveys[2].section_score_texts[1].score_texts[4].text =
+      SurveyProvider.translator("survey_3_section_3_level_4_text");
   }
 
   createSurveySections(surveyIndex, surveyId, numOfSections) {
