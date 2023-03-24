@@ -75,7 +75,12 @@
                     v-html="getTextForResponse(index)"
                   ></p>
 
-                  <a class="mt-3" href="#">{{ $t("read_how_to_improve") }}</a>
+                  <a
+                    class="mt-3"
+                    :href="survey.read_more_link"
+                    target="_blank"
+                    >{{ $t("read_how_to_improve") }}</a
+                  >
                 </div>
               </div>
             </div>

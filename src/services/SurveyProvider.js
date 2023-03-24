@@ -29,6 +29,8 @@ export default class SurveyProvider {
     {
       id: 1,
       name: "",
+      read_more_link:
+        "https://www.eqafit.org/wp-content/uploads/2023/03/Final_A4-ToolsGuidelines-indicator6.pdf",
       section_descriptions: [
         {
           name: "",
@@ -1576,6 +1578,8 @@ export default class SurveyProvider {
     {
       id: 2,
       name: "",
+      read_more_link:
+        "https://www.eqafit.org/wp-content/uploads/2023/03/Final_A4-ToolsGuidelines-indicator9.pdf",
       section_descriptions: [
         {
           name: "",
@@ -2081,6 +2085,8 @@ export default class SurveyProvider {
     {
       id: 3,
       name: "",
+      read_more_link:
+        "https://www.eqafit.org/wp-content/uploads/2023/03/Final_A4-ToolsGuidelines-indicator5.pdf",
       section_descriptions: [
         {
           name: "",
