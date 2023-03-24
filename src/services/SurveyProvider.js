@@ -2775,7 +2775,7 @@ export default class SurveyProvider {
     this.createChoicesQuestion(1, 2, 2, 3, 8, 4);
 
     this.createSurveySections(2, 3, 3);
-    this.createChoicesQuestion(2, 0, 3, 0, 0, 2, true);
+    this.createChoicesQuestion(2, 0, 3, 0, 0, 3, true);
     this.createChoicesQuestion(2, 0, 3, 1, 1, 7);
     this.createChoicesQuestion(2, 0, 3, 2, 2, 3);
     this.createChoicesQuestion(2, 0, 3, 3, 3, 2);
